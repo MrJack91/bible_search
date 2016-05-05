@@ -17,6 +17,7 @@ package ch.zhaw.infretrieval.biblesearch.search;
  */
 
 
+import ch.zhaw.infretrieval.biblesearch.utility.AnsiColor;
 import ch.zhaw.infretrieval.biblesearch.utility.Books;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -30,6 +31,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
 
+import javax.swing.text.Highlighter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -182,6 +184,7 @@ public class Search {
 
             end = Math.min(hits.length, start + hitsPerPage);
 
+            // Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
             for (int i = start; i < end; i++) {
                 if (raw) {
                     // output raw format
@@ -190,6 +193,9 @@ public class Search {
                 }
 
                 Document doc = searcher.doc(hits[i].doc);
+
+
+
                 String resultLine = (i + 1) + ".\t" + doc.get("text") + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book"))) + " " + doc.get("chapter") + "," + doc.get("verse");
                 System.out.println(resultLine);
             }
