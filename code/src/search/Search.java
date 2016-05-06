@@ -17,9 +17,8 @@ package search;
  */
 
 
-import utility.Books;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -29,6 +28,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
+import utility.Books;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -99,7 +99,7 @@ public class Search {
 
         IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(index)));
         IndexSearcher searcher = new IndexSearcher(reader);
-        Analyzer analyzer = new StandardAnalyzer();
+        Analyzer analyzer = new GermanAnalyzer();
 
         BufferedReader in = null;
         if (queries != null) {

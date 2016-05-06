@@ -2,6 +2,7 @@
 code/lucene-6.0.0_full
 code/lib/lucene-6.0.0-src
 code/src/demo
+code/index
 
 #general
 .idea

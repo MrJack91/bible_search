@@ -17,7 +17,7 @@ package index;
  */
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -81,8 +81,9 @@ public class Index {
             System.out.println("Indexing...");
 
             Directory dir = FSDirectory.open(Paths.get(indexPath));
-            Analyzer analyzer = new StandardAnalyzer();
+            Analyzer analyzer = new GermanAnalyzer();
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+
 
             if (create) {
                 // Create a new index in the directory, removing any
@@ -110,12 +111,12 @@ public class Index {
             // worth it when your index is relatively static (ie
             // you're done adding documents to it):
             //
-            // writer.forceMerge(1);
+            writer.forceMerge(1);
 
             writer.close();
 
             Date end = new Date();
-            String endMsg = end.getTime() - start.getTime() + " total milliseconds";
+            String endMsg = (double)(end.getTime() - start.getTime())/1000 + " total seconds";
             System.out.println(endMsg);
             String endMsgUnderline = new String(new char[endMsg.length()]).replace("\0", "-");
             System.out.println(endMsgUnderline);
