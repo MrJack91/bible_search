@@ -1,4 +1,4 @@
-package ch.zhaw.infretrieval.biblesearch.utility;
+package utility;
 
 import java.io.IOException;
 import java.nio.file.Files;

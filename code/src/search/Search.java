@@ -1,4 +1,4 @@
-package ch.zhaw.infretrieval.biblesearch.search;
+package search;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,8 +17,7 @@ package ch.zhaw.infretrieval.biblesearch.search;
  */
 
 
-import ch.zhaw.infretrieval.biblesearch.utility.AnsiColor;
-import ch.zhaw.infretrieval.biblesearch.utility.Books;
+import utility.Books;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -31,7 +30,6 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
 
-import javax.swing.text.Highlighter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -230,8 +228,14 @@ public class Search {
                         }
                         break;
                     } else {
-                        int page = Integer.parseInt(line);
-                        if ((page - 1) * hitsPerPage < numTotalHits) {
+                        int page = 0;
+                        try {
+                            page = Integer.parseInt(line);
+                        } catch (NumberFormatException e) {
+
+                        }
+
+                        if (page > 0 && (page - 1) * hitsPerPage < numTotalHits) {
                             start = (page - 1) * hitsPerPage;
                             break;
                         } else {

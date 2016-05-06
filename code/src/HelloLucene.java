@@ -1,5 +1,3 @@
-package ch.zhaw.infretrieval.biblesearch;
-
 import java.io.IOException;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;

@@ -1,4 +1,4 @@
-package ch.zhaw.infretrieval.biblesearch.index;
+package index;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -54,11 +54,22 @@ public class Index {
      * Index all text files under a directory.
      */
     public static void main(String[] args) {
+        /*
+        String usage = "java org.apache.lucene.demo.Index"
+                + " [-index INDEX_PATH] [-docs DOCS_PATH] [-update]\n\n"
+                + "This indexes the documents in DOCS_PATH, creating a Lucene index"
+                + "in INDEX_PATH that can be searched with SearchFiles";
+        */
+
         String indexFile;
         boolean create = true;
 
+        String indexPath = "index";
         for (int i = 0; i < args.length; i++) {
-            if ("-update".equals(args[i])) {
+            if ("-index".equals(args[i])) {
+                indexPath = args[i + 1];
+                i++;
+            } else if ("-update".equals(args[i])) {
                 create = false;
             }
         }
@@ -69,7 +80,7 @@ public class Index {
         try {
             System.out.println("Indexing...");
 
-            Directory dir = FSDirectory.open(Paths.get("index"));
+            Directory dir = FSDirectory.open(Paths.get(indexPath));
             Analyzer analyzer = new StandardAnalyzer();
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
 

@@ -1,4 +1,4 @@
-package ch.zhaw.infretrieval.biblesearch.utility;
+package utility;
 
 /**
  * Created by michael on 05.05.16.
