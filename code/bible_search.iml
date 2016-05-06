@@ -4,6 +4,7 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/additionalStuff" />
       <excludeFolder url="file://$MODULE_DIR$/lucene-6.0.0_full" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -12,5 +13,9 @@
     <orderEntry type="library" name="lucene-analyzers-common-6.0.0" level="project" />
     <orderEntry type="library" name="lucene-queryparser-6.0.0" level="project" />
     <orderEntry type="library" name="lucene-demo-6.0.0" level="project" />
+    <orderEntry type="library" name="lucene-suggest-6.0.0" level="project" />
+    <orderEntry type="library" name="lucene-highlighter-6.0.0" level="project" />
+    <orderEntry type="library" name="lucene-queries-6.0.0" level="project" />
+    <orderEntry type="library" name="lucene-memory-6.0.0" level="project" />
   </component>
 </module>

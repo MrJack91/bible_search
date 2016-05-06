@@ -18,16 +18,22 @@ package search;
 
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.highlight.*;
+import org.apache.lucene.search.spell.*;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import utility.AnsiColor;
 import utility.Books;
 
 import java.io.BufferedReader;
@@ -36,6 +42,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -44,6 +51,12 @@ import java.util.Date;
 public class Search {
 
     protected static Books books;
+
+    protected static Analyzer analyzer;
+    protected static IndexReader reader;
+
+    /** searchable field */
+    protected static String field = "content";
 
     private Search() {}
 
@@ -59,7 +72,7 @@ public class Search {
         }
 
         String index = "index";
-        String field = "text";
+
         String queries = null;
         int repeat = 0;
         boolean raw = false;
@@ -97,9 +110,10 @@ public class Search {
         // load books
         books = new Books();
 
-        IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(index)));
+        Directory dir = FSDirectory.open(Paths.get(index));
+        reader = DirectoryReader.open(dir);
         IndexSearcher searcher = new IndexSearcher(reader);
-        Analyzer analyzer = new GermanAnalyzer();
+        analyzer = new GermanAnalyzer();
 
         BufferedReader in = null;
         if (queries != null) {
@@ -162,6 +176,12 @@ public class Search {
         TopDocs results = searcher.search(query, 5 * hitsPerPage);
         ScoreDoc[] hits = results.scoreDocs;
 
+        // highlighting - src: http://makble.com/how-to-do-lucene-search-highlight-example
+        SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter(AnsiColor.ANSI_YELLOW, AnsiColor.ANSI_RESET);
+
+        QueryScorer queryScorer = new QueryScorer(query);
+        Highlighter highlighter = new Highlighter(htmlFormatter, queryScorer);
+
         int numTotalHits = results.totalHits;
         System.out.println(numTotalHits + " total matching documents");
 
@@ -176,13 +196,12 @@ public class Search {
                 if (line.length() == 0 || line.charAt(0) == 'n') {
                     break;
                 }
-
+                // load all
                 hits = searcher.search(query, numTotalHits).scoreDocs;
             }
 
             end = Math.min(hits.length, start + hitsPerPage);
 
-            // Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
             for (int i = start; i < end; i++) {
                 if (raw) {
                     // output raw format
@@ -192,13 +211,49 @@ public class Search {
 
                 Document doc = searcher.doc(hits[i].doc);
 
+                String content = doc.get(field);
 
+                // highlight keywords
+                TokenStream tokenStream = TokenSources.getTokenStream(field, reader.getTermVectors(i), content, new GermanAnalyzer(), -1);
+                TextFragment[] frag = new TextFragment[0];
+                try {
+                    frag = highlighter.getBestTextFragments(tokenStream, content, false, 4);
+                } catch (InvalidTokenOffsetsException e) {
+                    e.printStackTrace();
+                }
+                String contentHighlighted = "";
+                for (int j = 0; j < frag.length; j++) {
+                    if ((frag[j] != null) && (frag[j].getScore() > 0)) {
+                        contentHighlighted += frag[j].toString();
+                    }
+                }
 
-                String resultLine = (i + 1) + ".\t" + doc.get("text") + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book"))) + " " + doc.get("chapter") + "," + doc.get("verse");
+                String resultLine = (i + 1) + ".\t" + contentHighlighted + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book"))) + " " + doc.get("chapter") + "," + doc.get("verse");
                 System.out.println(resultLine);
             }
 
             if (!interactive || end == 0) {
+                // there are no entries, show spellchecker if available
+                DirectSpellChecker directSpellChecker = new DirectSpellChecker();
+
+                String[] searchWords = query.toString(field).split(" ");
+                ArrayList<String> didYouMeanWords = new ArrayList<>();;
+                boolean foundAlternative = false;
+                for (String searchWord : searchWords) {
+                    SuggestWord[] suggestions = directSpellChecker.suggestSimilar(new Term(field, searchWord), 1, reader, SuggestMode.SUGGEST_MORE_POPULAR);
+                    String didYouMean = searchWord;
+                    if (suggestions.length > 0) {
+                        didYouMean = suggestions[0].string;
+                        foundAlternative = true;
+                    }
+                    didYouMeanWords.add(didYouMean);
+                }
+                if (foundAlternative) {
+                    System.out.println("Did you mean: " + String.join(" ", didYouMeanWords));
+                } else {
+                    System.out.println("Sorry, there are no similar words known");
+                }
+
                 break;
             }
 

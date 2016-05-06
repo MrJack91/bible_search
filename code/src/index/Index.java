@@ -19,6 +19,7 @@ package index;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.document.*;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
@@ -39,7 +40,7 @@ import java.util.List;
  */
 public class Index {
 
-    final static String BIBLE_PATH = "/Users/michael/projects/bible_search/code/data/b_luther_utf8.txt";
+    final static String BIBLE_PATH = "/Users/michael/projects/bible_search/code/data/luther_utf8.txt";
 
     /** amount of lines to index, 0 means all */
     final static int MAX_LINES_FOR_INDEX = 0;
@@ -83,7 +84,6 @@ public class Index {
             Directory dir = FSDirectory.open(Paths.get(indexPath));
             Analyzer analyzer = new GermanAnalyzer();
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-
 
             if (create) {
                 // Create a new index in the directory, removing any
@@ -168,11 +168,23 @@ public class Index {
             // make a new, empty document
             Document doc = new Document();
 
+            /*
+            FieldType type = new FieldType();
+            type.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
+            type.setStored(true);
+            type.setStoreTermVectors(true);
+            type.setTokenized(true);
+            type.setStoreTermVectorOffsets(true);
+            */
+
             doc.add(new StoredField("id", Integer.toString(id)));
             doc.add(new StoredField("book", Integer.toString(book)));
             doc.add(new StoredField("chapter", Integer.toString(chapter)));
             doc.add(new StoredField("verse", Integer.toString(verse)));
-            doc.add(new TextField("text", text, Field.Store.YES));
+            doc.add(new TextField("content", text, Field.Store.YES));
+            // doc.add(new Field("ncontent", text, type));
+
+
 
             if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
                 // New index, so we just add the document (no old document can be there):
