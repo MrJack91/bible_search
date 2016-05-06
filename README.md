@@ -1,2 +1,2 @@
 # bible_search
-information retrieval as bible search
+Information retrieval for a bible search. Based on Apache Lucene.
