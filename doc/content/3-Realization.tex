@@ -1,23 +1,104 @@
 \chapter{Umsetzung der Suche}
 In diesem Kapitel wird die Umsetzung der Suche beschrieben.
 
-Die Suche soll mit Apache Lucene umgesetzt werden. Für die Bedienun genügt in erster Linie ein \gls{cliLabel}.
+Die Suche soll mit Apache Lucene umgesetzt werden. Für die Bedienung genügt in erster Linie ein \gls{cliLabel}.
+Aus rechtlichen Gründen, so wie aus Gründen der Verfügbarkeit wird als Grundlage eine Martin Luther Übersetzung der Bibel verwendet.
 
 \section{Beschreibung der Suchresultaten}
-Für jedes Suchresultat soll der Text und die genaue Bibelstelle im Format "`[Buch Abk.], [Kapitel],[Vers]"' ausgeben werden.
-Die Resultate sollen nach einem sinnvollen Ranking sortiert sein.
-Besonders schön wäre eine Farbliche Hervorhebung (Highlighting) der Suchbegriffe in der Resultaten-Liste.
+Für jedes Suchresultat soll der Text und die genaue Bibelstelle in folgendem Format ausgegeben werden:\\
+"`[Buch Abk.], [Kapitel],[Vers]"'
 
-\textbf{Beispiel der Resultat-Liste Ergebnisses:}
+Die Resultate sollen nach einem sinnvollen Ranking sortiert sein.
+Besonders schön wäre eine farbliche Hervorhebung (Highlighting) der Suchbegriffen in der Resultat-Liste.
+
+\textbf{Beispiel der Resultat-Liste mit Ergebnissen:}
 \begin{itemize}
 	\item Da wurden sie alle gutes Muts und nahmen auch Speise. - Apg 27,36
-	\item Was setzt sich dein Mut gegen Gott, daß du solche Reden aus deinem Munde lässest? - Hiob 15,13
+	\item Was setzt sich dein Mut gegen Gott, dass du solche Reden aus deinem Munde lässest? - Hiob 15,13
 	\item der den Fürsten den Mut nimmt und schrecklich ist unter den Königen auf Erden. - Ps 76,12
 	\item Ein Geduldiger ist besser denn ein Starker, und der seines Mutes Herr ist, denn der Städte gewinnt. - Spr 16,32
 \end{itemize}
 
 
 \section{Optionale Dokumenteinheit}
+Der Text von der Luther Bibel muss in Dokumente eingeteilt und zum Index hinzugefügt werden.
+Die Dokumentgrösse hat einen sehr grossen Einfluss, wie der Kontext von Begriffen bewertet wird, z.B. der Wortabstand kann genauer genutzt werden, wenn grössere Dokumente zur Verfügung stehen.
+Zudem werden Metadaten grundsätzlich pro Dokument gespeichert, also desto kleiner ein Dokument gewählt wird, desto genauer kann die Stelle des Auftauchens angezeigt werden.
+
+Zuerst wird eine generelle passende Dokumentgrösse gesucht, welche dann durch Optimierungen verbessert werden soll.
+Dazu muss die Struktur der Bibel, sowie der Grammatik berücksichtigt werden.
+
+\subsection{Grobe Definition der Dokumentgrösse}
+Für die Aufteilung der Dokumente gibt es verschiedene Möglichkeiten:
+\begin{itemize}
+	\item ganzer Text als ein Dokument
+	\item pro Buch ein Dokument
+	\item pro Kapitel ein Dokument
+	\item pro Vers ein Dokument
+\end{itemize}
+
+Verständlicherweise ergeben sich für jede Möglichkeit Vor- aber auch Nachteile.
+Im Folgenden wird darauf für jede Möglichkeit eingegangen.
+
+\subsubsection{Ganzer Text als ein Dokument}
+Wird der ganze Text zu einem Dokument hinzugefügt, kann der Kontext mit dem Wortabstand am besten rekonstruiert werden.
+Jedoch kann bei einem Fund kaum oder nur über komplexe Hilfsstrukturen die beinhaltende Bibelstelle angezeigt werden.
+Lucene ist darauf ausgelegt, dass ein Dokument entweder der Suche entspricht oder eben nicht.
+Z.B. basiert das Ranking auf dem Scoring, bei welchem pro Treffer die Dokument-Übereinstimmung berechnet wird.
+Also im Konzept von Lucene würde man so lediglich erfahren, ob und evtl. noch wie viel die Themen in der Bibel vorkommen oder nicht.
+Diese Grösse des Dokuments eignet sich für unsern Anwendungsfall also nicht.
+
+\subsubsection{Pro Buch ein Dokument}
+Ein Dokument pro Buch zu definieren, ist ebenfalls eine zu grosse Einheit, da wir so nur 66 Dokumente hätten, welche auf die Suche zutreffen können oder nicht.
+Da die Bücher relativ gross sind und nicht unbedingt auf eine Thema beschränkt sind, würde das ebenfalls keinen Sinn machen.
+Ganz grob könnten so allenfalls die Hauptthemen der Bücher überprüft werden.
+
+\subsubsection{Pro Kapitel ein Dokument}
+Selbst eine Aufteilung nach Kapitel ist zu grob, da die Kapitel keine einheitliche Länge habe und auch hier ist ein Kapitel oft nicht auf ein Thema beschränkt.
+Ein Kapitel kann mehrere Themen behandeln, so wie aber auch Themen über mehrere Kapitel erläutert werden können.
+Wenn man sich die Anwendungsfälle der Beispielanfragen vor Augen führt, lässt sich ebenfalls daraus schliessen, dass eine kleinere übersichtlichere Einheit benötigt wird.
+
+\subsubsection{Pro Vers ein Dokument}
+Wenn jeder Vers in ein Dokument gepackt wird, so erreichen wir bereits eine sehr gut Ergebnisse.
+Es treten allerdings zwei Probleme auf:
+\begin{itemize}
+	\item \textbf{Satztrennung}: Gelegentliche Trennung von ganzen Sätzen\\
+	Da die Einteilung der Versen keinen grammatischen Regeln unterliegt, kommt es mehrmals vor, dass einzelne Teilsätze als alleinstehendes Dokument erstellt wurde. Dies macht in den meisten Fällen keinen Sinn.
+	\item \textbf{Kontext Berücksichtigung}: Kontext ist sehr beschränkt\\
+	Das Ranking, welches unter anderem auch den Wortabstand für die Gewichtung berücksichtigt, funktioniert nur eingeschränkt, da der gesamt Kontext pro Dokument sehr klein ist.
+\end{itemize}
+
+Trotz den Nachteilen eignet sich für die Beantwortung der Beispielanfragen die Dokumentengrösse eines Verses am Besten.
+
+\subsection{Dokumentgrösse optimieren}
+Um die zwei erwähnten Hauptprobleme (Satztrennung und Kontext Berücksichtigung) zu beheben, wurden folgende Lösungen in Betracht bezogen.
+
+\subsubsection{Satztrennung optimieren}
+Die unerwünschte Satztrennung lässt sich einfach beheben, indem weiterhin grundsätzlich Verse als eigenes Dokument hinzugefügt werden.
+Allerdings gibt es die Ausnahme, dass wenn der Vers am Ende keinen abgeschlossenen Satz hat, der nächste Satz ebenfalls zum selben Dokument hinzugefügt wird.
+Um später die genaue Fundstelle anzugeben, muss der Index mit einer Verslänge erweitert werden.
+
+Die Stellenangabe wird dann wie folgt aussehen:\\
+"`[Buch Abk.], [Kapitel],[Vers[- (Vers + Verslänge)]]"'
+
+\subsubsection{Mehrere Verse pro Dokument}
+Um den Kontext besser berücksichtigen zu können, müssten jeweils mehrere Versen pro Dokument zusammengefügt werden.
+Da aber der effektive Kontext nicht einfach gruppiert werden kann, muss man statisch eine Anzahl Verse zusammenfügen.
+Dieser Ansatz ist naiv und würde zu falschen Ergebnissen führen, da sie abhängig der gewählten Gruppengrösse sporadische "`Pseudo-Kontexte"' kreieren würde.
+Dies hätte die Folge einer nicht einschätzbaren und einer nicht vertrauenswürdigen Suche.
+Dies wäre für den Nutzer nicht gewinnbringend, sondern eher verwirrend und kaum brauchbar.
+
+\subsubsection{Verse mit den Nachbarversen ergänzen und zu einem Dokument hinzufügen}
+Alternativ könnte zu jedem Dokument die Nachbarversen angehängt werden. So würde der Kontext genauer bewertet werden.
+Der Kontext kann so klar verbessert werden.
+Das Problem hier ist, dass Inhalte mehrmals in den Resultaten auftauchen werden, da der Kontext überschneidend ist.
+Hier die überflüssigen Ergebnisse herauszufiltern, ist mit grossem Aufwand verbunden.
+
+\subsubsection{Nachbarverse als eigenes Feld zum Index hinzufügen}
+Für diese Optimierung sollte nebst dem eigentlichen Vers in einem eigenen Feld der Vers mit den Nachbarsversen hinzugefügt werden.
+Gefahr hier ist, dass die Gewichtung des Trefferverses, über das Vorhandensein bei den Nachbarn, die Nachbar selbst zu stark gewichtet, so dass diese Nachbarversen oft auch als eigenes Resultat auftauchen, aber eigentlich gar nicht von Interesse sind.
+
+Da der genaue Effekt dieser Optimierung nicht wirklich abgeschätzt werden kann, lohnt es sich eine Implementation dieses Möglichkeit auszuprobieren und die Resultate zu vergleichen.
 
 
 \section{Indexierung}
@@ -38,4 +119,4 @@ Besonders schön wäre eine Farbliche Hervorhebung (Highlighting) der Suchbegrif
 * highlighter
 * (ausstehend) - synonym expansion
 
-\section{Index Analysierung mit Luke}
+\section{Index Analyse mit Luke}
