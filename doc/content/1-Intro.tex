@@ -1,0 +1,42 @@
+\chapter{Einleitung}
+Im Rahmen einer Seminararbeit zum Thema Information Retrieval an der \gls{zhawLabel} wurde eine Volltext-Suche über die \gls{glos:bibleLabel} umgesetzt. Die Suche basiert auf Apache Lucene.\footcite{Apache_Lucene_2016-05-07}
+
+\section{Ausgangslage}
+Die Bibel wird auf verschiedenen Medien in der ganzen Welt günstig, wenn nicht sogar gratis verteilt.
+Seit es Smartphones gibt, werden auch Apps angeboten die einem das Buch jederzeit zur Verfügung stellen.
+
+Viele der elektronischen Ausführungen unterstützen eine Volltextsuche (simples Text-Matching).
+Will man aber eine bestimmte Stelle finden und weiss nur noch den ungefähren Inhalt, so versagt die Volltextsuche oft.
+
+\subsection{Motivation}
+Mit Hilfe dieser Arbeit soll die Suche nach gewünschten Passagen verbessert werden, indem die Vorteile einer gängigen Text Search Engine verwendet werden.
+So soll ein nützliches Werkzeug für \gls{glos:bibleLabel}-Interessierte angeboten werden.
+
+\subsection{Inhalt}
+Nebst der Umsetzung der eigentlichen Suche, wird die Suche mit anderen, bereits bestehenden Suchen verglichen, so dass Veränderungen festgestellt werden können.
+
+\subsection{Abgrenzungen}
+Die umzusetzende Suche soll nicht die Funktion eines \gls{glos:bibleReaderLabel}s anbieten und somit den Gebrauch der \gls{glos:bibleLabel} ersetzen, sondern es soll lediglich ein Werkzeug sein, dass einem Referenzen mit minimalem Kontext zu Bibelstellen ausgibt, die dann in \glspl{glos:bibleReaderLabel} nachgeschlagen werden können.
+
+\section{Exkurs: Bibelstruktur}
+Für nicht \gls{glos:bibleLabel}-Kenner wird folgend der Aufbau und die Struktur der \gls{glos:bibleLabel} beschrieben.
+
+Die \gls{glos:bibleLabel} gilt als Sammlung von 66 verschiedenen Büchern.
+Sie ist aufgeteilt in zwei Testamente:
+\begin{itemize}
+	\item \gls{atLabel} mit 39 Bücher
+	\item \gls{ntLabel} mit 27 Bücher
+\end{itemize}
+Jedes Buch ist in Kapitel und Verse eingeteilt.
+
+Es gibt verschiedene Übersetzungen (Formulierungen), welche den Text eindeutig identifizieren.
+
+%todo: Anhang mit vollständiger Liste der Bücher und Abkürzungen
+
+\begin{framed}
+	\textbf{Beispiel: \gls{glos:bibleLabel}-Vers mit vollständiger Stellenangabe}
+	\begin{quote}
+		"`Denn also hat Gott die Welt geliebt, dass er seinen eingeborenen Sohn gab, damit alle, die an ihn glauben, nicht verloren werden, sondern das ewige Leben haben."' - \textit{Joh 3,16 (MLB)\footnotemark}
+	\end{quote}
+\end{framed}
+\footnotetext{Angabe der genauen Übersetzungen: MLB = Martin Luther Bibel}

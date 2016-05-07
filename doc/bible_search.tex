@@ -3,6 +3,8 @@
 % !TeX spellcheck = <none>
 % !BIB = biber
 
+% to build: pdflatex, glossary, biber, pdflatex (2x)
+
 %% Bug fixes and other packages to be loaded before the class
 \RequirePackage[l2tabu, orthodox]{nag} % check for mistakes in the code
 \RequirePackage{fix-cm} % permit Computer Modern fonts at arbitrary sizes.
@@ -198,12 +200,11 @@
 \mainmatter
 %
 % (files loaded with include must not have the suffix .tex)
-\input{content/1-WorkDefinition}
-\input{content/2-Analysis}
-\input{content/3-Concept}
-\input{content/4-Proof-of-Concept}
-\input{content/5-Testing}
-\input{content/6-Summary}
+\input{content/1-Intro}
+\input{content/2-Concept}
+\input{content/3-Realization}
+\input{content/4-Comparison}
+\input{content/5-Summary}
 
 %%% -- end of main content
 
