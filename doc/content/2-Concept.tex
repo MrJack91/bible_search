@@ -7,11 +7,10 @@ Dazu sollen \textit{Kriterien für die Messbarkeit} einer Suche und deren Result
 Weiter werden Beispielanfragen definiert, die in allen Suchen ausgeführt werden und so die Basis für den Vergleich mit der neuen Suche bilden.
 
 \section{Kriterien für die Messbarkeit}
-%Precision = (Relevant + Gefunden) / Gefunden
+%Precision = (Relevant & Gefunden) / Gefunden
 %	—> Genauigkeit
-%Recall = (Relevant + Gefunden) / Relevant
+%Recall = (Relevant & Gefunden) / Relevant
 %	—> Vollständigkeit
-
 
 \section{Suchanfrage }
 
@@ -28,3 +27,88 @@ Hauptsächlich gibt es zwei Arten von Suchanfragen die ein Nutzer stellen kann:
 
 
 \subsection{Beispielanfragen}
+\label{subsec:exampleQueries}
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Q1: Sohn von Abraham}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wie hiess der Sohn vom Abraham?}\\
+		Anfrage-Typ: & \textit{Faktenorientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will den Namen des Sohnes von Abraham wissen.\\
+		Query: & - \\
+		Erwartung: & Vers und Stellenangabe:
+		"`Dies ist das Geschlecht Isaaks, des Sohnes Abrahams: Abraham zeugte Isaak."' - \textit{1 Mo (Gen) 25,19 \gls{mlbLabel}}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Q2: "`Denn so sehr hat Gott die Welt geliebt, ..."'}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wie heisst der bekannte Vers ähnlich: "`Denn so sehr hat Gott die Welt geliebt, dass..."'}\\
+		Anfrage-Typ: & \textit{Versorientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will den genauen Vers sehen inkl. Stellenangabe\\
+		Query: & -\\
+		Erwartung: & Vers und Stellenangabe:
+		"`Also hat Gott die Welt geliebt, dass er seinen eingeborenen Sohn gab"' - \textit{Joh 3,16 \gls{mlbLabel}}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Q3: Abendmahl Ersterwähnung}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wo wurde das Abendmahl hinzugefügt?}\\
+		Anfrage-Typ: & \textit{Faktenorientierte Anfrage}\\
+		Beschreibung: & Der Nutzer den Kontext vom Abendmahl finden.\\
+		Query: & -\\
+		Erwartung: & Vers und Stellenangabe: \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Q4: \textit{10 Gebote}}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wo stehen die 10 Gebote?} und \textit{Wie lauten sie?}\\
+		Anfrage-Typ: & \textit{Vers- und faktenorientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will sich über die 10 Gebote informieren.\\
+		Query: & -\\
+		Erwartung: & Vers und Stellenangabe:\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+
+% Weitere Themen:
+% - Wer sucht der wird finden.. -> math 7.7
+% - Homosexualität
+% - Der HERR segne dich und behüte dich; der HERR lasse sein Angesicht leuchten über dir und sei dir gnädig; der HERR hebe sein Angesicht über dich und gebe dir Frieden. - 4 Mose 6:24-26 | LUT |
+% Nächsten Liebe
+

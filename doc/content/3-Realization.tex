@@ -1,8 +1,24 @@
 \chapter{Umsetzung der Suche}
+In diesem Kapitel wird die Umsetzung der Suche beschrieben.
+
+Die Suche soll mit Apache Lucene umgesetzt werden. Für die Bedienun genügt in erster Linie ein \gls{cliLabel}.
 
 \section{Beschreibung der Suchresultaten}
+Für jedes Suchresultat soll der Text und die genaue Bibelstelle im Format "`[Buch Abk.], [Kapitel],[Vers]"' ausgeben werden.
+Die Resultate sollen nach einem sinnvollen Ranking sortiert sein.
+Besonders schön wäre eine Farbliche Hervorhebung (Highlighting) der Suchbegriffe in der Resultaten-Liste.
+
+\textbf{Beispiel der Resultat-Liste Ergebnisses:}
+\begin{itemize}
+	\item Da wurden sie alle gutes Muts und nahmen auch Speise. - Apg 27,36
+	\item Was setzt sich dein Mut gegen Gott, daß du solche Reden aus deinem Munde lässest? - Hiob 15,13
+	\item der den Fürsten den Mut nimmt und schrecklich ist unter den Königen auf Erden. - Ps 76,12
+	\item Ein Geduldiger ist besser denn ein Starker, und der seines Mutes Herr ist, denn der Städte gewinnt. - Spr 16,32
+\end{itemize}
+
 
 \section{Optionale Dokumenteinheit}
+
 
 \section{Indexierung}
 \subsection{Besonderheiten}
