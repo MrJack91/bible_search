@@ -40,7 +40,63 @@
 }
 
 
+\newglossaryentry{glos:indexLabel}{
+	name=Index,
+	plural={Indexe},
+	description={
+		Der Index stellt eine Hilfs-Dateistruktur dar, in der effizient Dokumente gefunden werden können.
+		Dabei wird der Index vorläufig in einer \gls{glos:indexingLabel}-Phase aufgebaut, um dann bei einer Suche rasch Ergebnisse liefern zu können.
+		Der Index kann vollständig aus den durchsuchbaren Daten abgeleitet werden, was aber bei grossen Datenmengen lange dauern kann.
+	}
+}
 
+\newglossaryentry{glos:indexingLabel}{
+	name=Indexierung,
+	plural={Indexierungen},
+	description={
+		Indexierung bezeichnet die Generierungs-Phase des \gls{glos:indexLabel}s.
+		Bei der Indexierung werden \gls{glos:documentLabel} dem \gls{glos:indexLabel} hinzugefügt.
+	}
+}
+
+\newglossaryentry{glos:documentLabel}{
+	name=Dokument,
+	plural={Dokumente},
+	description={		
+		Ein Dokument ist eine Einheit der Suche und des Indexes, eine Entität nach der gesucht werden kann.
+		Ein Index beinhaltet mindestens ein Dokument.
+		Ein Dokument im Kontext von Lucene muss nicht dem gebräuchlichen Begriff eines schriftlichen Dokumentes entsprechen, sondern ist in dieser Arbeit zum Beispiel eine Bibelstelle.
+		Bei der \gls{glos:indexingLabel} werden Dokumente dem \gls{glos:indexLabel} hinzugefügt und beim Suchen werden Dokumente als Ergebnisse vom \gls{glos:indexLabel} empfangen.
+		\footcite{Basic_Concepts_Lucene_Tutorial_2016-05-08}
+	}
+}
+
+\newglossaryentry{glos:scoringLabel}{
+	name=Scoring,
+	plural={Scorings},
+	description={
+		Bei einer Suche wird für jedes \gsl{glos:documentLabel} die Übereinstimmung mit dem Suchbegriff berechnet.
+		Das Ergebnis dieses Wertes heisst Scoring.
+		Desto höher das Scoring ist, umso genauer passt das Ergebnis zu Suche.
+		Für das Scoring werden verschiedene Faktoren berücksichtigt, welche nicht im Rahmen dieses Dokumente erläutert werden.
+	}
+}
+
+\newglossaryentry{glos:rankingLabel}{
+	name=Ranking,
+	plural={Rankings},
+	description={
+		Das Ranking definiert die Reihenfolge in der die Suchergebnisse sortiert sind, es lässt sich direkt aus dem Scoring ableiten.
+	}
+}
+
+\newglossaryentry{glos:wordDistanceLabel}{
+	name=Wortabstand,
+	plural={Wortabstände},
+	description={
+		Der Wortabstand lässt Rückschluss auf die Wichtigkeit eines Begriffes in einem Dokument ziehen. Wenn zum Beispiel ein Wort mehrmals innerhalb eines kleinem Wortabstandes erwähnt wird, kann eine erhöhte Wichtigkeit dieses Wortes angenommen werden.
+	}
+}
 
 
 % use it with \gls{glos:DVD}
