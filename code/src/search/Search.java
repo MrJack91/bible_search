@@ -126,7 +126,7 @@ public class Search {
             in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         }
         // QueryParser parser = new QueryParser(field, analyzer);
-        MultiFieldQueryParser parser = new MultiFieldQueryParser(new String[]{"content", "context"}, analyzer);
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(new String[]{field, "context"}, analyzer);
         parser.setDefaultOperator(QueryParser.Operator.OR);
 
         while (true) {
@@ -148,7 +148,8 @@ public class Search {
             }
 
             Query query = parser.parse(line);
-            System.out.println(AnsiColor.ANSI_BLUE + "Searching for: " + AnsiColor.ANSI_YELLOW + query.toString(field) + AnsiColor.ANSI_RESET);
+            System.out.println(AnsiColor.ANSI_BLUE + "Searching for: " + AnsiColor.ANSI_YELLOW + line + AnsiColor.ANSI_RESET);
+            System.out.println(AnsiColor.ANSI_BLUE + "Real query: " + AnsiColor.ANSI_YELLOW + query.toString(field) + AnsiColor.ANSI_RESET);
 
             if (repeat > 0) {
                 // repeat & time as benchmark
@@ -196,6 +197,11 @@ public class Search {
         ArrayList<String> didYouMeanWords = new ArrayList<>();;
         boolean foundAlternative = false;
         for (String searchWord : searchWords) {
+            if (searchWord.length() > 8 && searchWord.substring(0, 8).equals("context:")) {
+                continue;
+            }
+            searchWord = searchWord.replace("(", "");
+
             SuggestWord[] suggestions = directSpellChecker.suggestSimilar(new Term(field, searchWord), 1, reader, SuggestMode.SUGGEST_MORE_POPULAR);
             String didYouMean = searchWord;
             if (suggestions.length > 0) {
@@ -275,7 +281,8 @@ public class Search {
                         + contentHighlighted
                         + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book")))
                         + " " + doc.get("chapter") + "," + versText
-                        + "\n\t\tC: " + doc.get("context");
+                        // + "\n\t\tC: " + doc.get("context")
+                ;
                 System.out.println(resultLine);
             }
 
