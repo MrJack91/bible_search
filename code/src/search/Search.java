@@ -24,6 +24,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -36,6 +37,7 @@ import org.apache.lucene.store.FSDirectory;
 import utility.AnsiColor;
 import utility.Books;
 
+import javax.management.loading.MLet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,6 +45,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -121,7 +125,10 @@ public class Search {
         } else {
             in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         }
-        QueryParser parser = new QueryParser(field, analyzer);
+        // QueryParser parser = new QueryParser(field, analyzer);
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(new String[]{"content", "context"}, analyzer);
+        parser.setDefaultOperator(QueryParser.Operator.OR);
+
         while (true) {
             if (queries == null && queryString == null) {
                 // prompt the user
@@ -247,6 +254,10 @@ public class Search {
                 } catch (InvalidTokenOffsetsException e) {
                     e.printStackTrace();
                 }
+
+                // make sure, that the sentence order is always correctly
+                Arrays.sort(frag, Comparator.comparing(TextFragment::getFragNum));
+
                 String contentHighlighted = "";
                 for (int j = 0; j < frag.length; j++) {
                     // if ((frag[j] != null) && (frag[j].getScore() > 0)) {
@@ -255,7 +266,16 @@ public class Search {
                     }
                 }
 
-                String resultLine = AnsiColor.ANSI_BLUE + (i + 1) + ".\t" + AnsiColor.ANSI_RESET + contentHighlighted + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book"))) + " " + doc.get("chapter") + "," + doc.get("verse");
+                String versText = doc.get("verse");
+                int verseLength = Integer.parseInt(doc.get("verseLength"));
+                if (verseLength > 1) {
+                    versText += "-" + Integer.toString(Integer.parseInt(doc.get("verse")) + verseLength-1);
+                }
+                String resultLine = AnsiColor.ANSI_BLUE + (i + 1) + ".\t" + AnsiColor.ANSI_RESET
+                        + contentHighlighted
+                        + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book")))
+                        + " " + doc.get("chapter") + "," + versText
+                        + "\n\t\tC: " + doc.get("context");
                 System.out.println(resultLine);
             }
 

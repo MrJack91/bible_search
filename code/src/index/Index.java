@@ -45,17 +45,20 @@ public class Index {
 
     private final static String BIBLE_PATH = "/Users/michael/projects/bible_search/code/data/luther_utf8.txt";
 
+    /**  */
+    private final static int CONTEXT_WINDOWS_VERSE_BASED = 1;
+
+    /**  */
+    private final static float CONTEXT_BOOST = (float) 0.7;
+
+    /** valid sentence endings */
+    private final static List<String> SENTENCE_ENDINGS = Arrays.asList(".","?","!",";", "\"");
+
     /** amount of lines to index, 0 means all */
     private final static int MAX_LINES_FOR_INDEX = 0;
 
     /** max elements to show for processing state */
     private final static int MAX_UI_PROCESS_ELEMENTS = 100;
-
-    /** valid sentence endings */
-    // private final static String[] SENTENCE_ENDINGS = new String[] {".","?","!",";"};
-    private final static List<String> SENTENCE_ENDINGS = Arrays.asList(".","?","!",";");
-
-
 
     private Index() {
     }
@@ -155,6 +158,7 @@ public class Index {
         int processedLines = 0;
         int processPassedPart = 0;
         int processCurrentPart;
+        int newDocuments = 0;
 
         int fullId = 0;
         int fullBook = 0;
@@ -163,11 +167,7 @@ public class Index {
         int fullVerseLength = 0;
         String fullText = "";
 
-        // List<Integer> versesStats = new ArrayList<Integer>();
         Map<Integer,Integer> versesStats = new HashMap<Integer, Integer>();
-
-
-
         for (String line : lines) {
             processedLines++;
 
@@ -192,7 +192,7 @@ public class Index {
                 fullChapter = chapter;
                 fullVerse = verse;
             } else {
-                text = "\n" + text;
+                text = "\n\t" + text;
             }
 
             fullVerseLength++;
@@ -215,13 +215,34 @@ public class Index {
                 doc.add(new TextField("content", fullText, Field.Store.YES));
                 doc.add(new StoredField("verseLength", Integer.toString(fullVerseLength)));
 
-                // todo: add neighbours to context (in separate fields)
+                // add neighbours to context
+                String context = "";
+                for(int j = processedLines-CONTEXT_WINDOWS_VERSE_BASED; j < processedLines+CONTEXT_WINDOWS_VERSE_BASED; j++) {
+                    // skip invalid lines and the main verse by itself
+                    if (j >= 0 && j < lines.size()) {
+                        String[] contextlinePart = lines.get(j).split("\t");
+
+                        int contextBook = Integer.parseInt(contextlinePart[1]);
+                        // int contextChapter = Integer.parseInt(contextlinePart[2]);
+
+                        // add only verses if it in the same book
+                        if (fullBook == contextBook) {
+                            String contextText = contextlinePart[4].trim();
+                            context += contextText + " ";
+                        }
+                    }
+                }
+                TextField contentTextField = new TextField("context", context.trim(), Field.Store.YES);
+                // set weak boost for this context field
+                contentTextField.setBoost(CONTEXT_BOOST);
+                doc.add(contentTextField);
 
                 /*
                 if (fullVerseLength == 9) {
                     System.out.println(fullText + "\n");
                 }
                 */
+
 
                 int oldValue = 1;
                 if (versesStats.containsKey(fullVerseLength)) {
@@ -239,6 +260,7 @@ public class Index {
                     // path, if present:
                     writer.updateDocument(new Term("id", Integer.toString(id)), doc);
                 }
+                newDocuments++;
 
                 // reset multi sentence values
                 fullId = 0;
@@ -263,5 +285,7 @@ public class Index {
         }
 
         System.out.println("\n" + Integer.toString(processedLines) + " lines indexed");
+        System.out.println(Integer.toString(newDocuments) + " Documents created");
+
     }
 }
