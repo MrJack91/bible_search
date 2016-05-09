@@ -33,8 +33,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Index all text files under a directory.
@@ -44,13 +43,19 @@ import java.util.List;
  */
 public class Index {
 
-    final static String BIBLE_PATH = "/Users/michael/projects/bible_search/code/data/luther_utf8.txt";
+    private final static String BIBLE_PATH = "/Users/michael/projects/bible_search/code/data/luther_utf8.txt";
 
     /** amount of lines to index, 0 means all */
-    final static int MAX_LINES_FOR_INDEX = 0;
+    private final static int MAX_LINES_FOR_INDEX = 0;
 
     /** max elements to show for processing state */
-    final static int MAX_UI_PROCESS_ELEMENTS = 100;
+    private final static int MAX_UI_PROCESS_ELEMENTS = 100;
+
+    /** valid sentence endings */
+    // private final static String[] SENTENCE_ENDINGS = new String[] {".","?","!",";"};
+    private final static List<String> SENTENCE_ENDINGS = Arrays.asList(".","?","!",";");
+
+
 
     private Index() {
     }
@@ -150,6 +155,19 @@ public class Index {
         int processedLines = 0;
         int processPassedPart = 0;
         int processCurrentPart;
+
+        int fullId = 0;
+        int fullBook = 0;
+        int fullChapter = 0;
+        int fullVerse = 0;
+        int fullVerseLength = 0;
+        String fullText = "";
+
+        // List<Integer> versesStats = new ArrayList<Integer>();
+        Map<Integer,Integer> versesStats = new HashMap<Integer, Integer>();
+
+
+
         for (String line : lines) {
             processedLines++;
 
@@ -165,44 +183,83 @@ public class Index {
             int book = Integer.parseInt(linePart[1]);
             int chapter = Integer.parseInt(linePart[2]);
             int verse = Integer.parseInt(linePart[3]);
-            String text = linePart[4];
+            String text = linePart[4].trim();
 
-            // System.out.println(text);
-
-            // make a new, empty document
-            Document doc = new Document();
-
-            /*
-            FieldType type = new FieldType();
-            type.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
-            type.setStored(true);
-            type.setStoreTermVectors(true);
-            type.setTokenized(true);
-            type.setStoreTermVectorOffsets(true);
-            */
-
-            doc.add(new StoredField("id", Integer.toString(id)));
-            doc.add(new StoredField("book", Integer.toString(book)));
-            doc.add(new StoredField("chapter", Integer.toString(chapter)));
-            doc.add(new StoredField("verse", Integer.toString(verse)));
-            doc.add(new TextField("content", text, Field.Store.YES));
-            // doc.add(new Field("ncontent", text, type));
-
-
-
-            if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
-                // New index, so we just add the document (no old document can be there):
-                writer.addDocument(doc);
+            // build multi vers sentence
+            if (fullVerseLength == 0) {
+                fullId = id;
+                fullBook = book;
+                fullChapter = chapter;
+                fullVerse = verse;
             } else {
-                // Existing index (an old copy of this document may have been indexed) so
-                // we use updateDocument instead to replace the old one matching the exact
-                // path, if present:
-                writer.updateDocument(new Term("id", Integer.toString(id)), doc);
+                text = "\n" + text;
             }
 
-            if (MAX_LINES_FOR_INDEX > 0 && processedLines >= MAX_LINES_FOR_INDEX) {
-                break;
+            fullVerseLength++;
+            fullText += text;
+
+            // last char
+            String lastChar = text.substring(text.length() - 1);
+            boolean addToIndex = SENTENCE_ENDINGS.contains(lastChar) || fullBook != book || fullChapter != chapter;
+
+            if (addToIndex) {
+                // add only whole sentence to the index
+
+                // make a new, empty document
+                Document doc = new Document();
+
+                doc.add(new StoredField("id", Integer.toString(fullId)));
+                doc.add(new StoredField("book", Integer.toString(fullBook)));
+                doc.add(new StoredField("chapter", Integer.toString(fullChapter)));
+                doc.add(new StoredField("verse", Integer.toString(fullVerse)));
+                doc.add(new TextField("content", fullText, Field.Store.YES));
+                doc.add(new StoredField("verseLength", Integer.toString(fullVerseLength)));
+
+                // todo: add neighbours to context (in separate fields)
+
+                /*
+                if (fullVerseLength == 9) {
+                    System.out.println(fullText + "\n");
+                }
+                */
+
+                int oldValue = 1;
+                if (versesStats.containsKey(fullVerseLength)) {
+                    oldValue = versesStats.get(fullVerseLength);
+                    oldValue++;
+                }
+                versesStats.put(fullVerseLength, oldValue);
+
+                if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
+                    // New index, so we just add the document (no old document can be there):
+                    writer.addDocument(doc);
+                } else {
+                    // Existing index (an old copy of this document may have been indexed) so
+                    // we use updateDocument instead to replace the old one matching the exact
+                    // path, if present:
+                    writer.updateDocument(new Term("id", Integer.toString(id)), doc);
+                }
+
+                // reset multi sentence values
+                fullId = 0;
+                fullBook = 0;
+                fullChapter = 0;
+                fullVerse = 0;
+                fullVerseLength = 0;
+                fullText = "";
+
+                if (MAX_LINES_FOR_INDEX > 0 && processedLines >= MAX_LINES_FOR_INDEX) {
+                    break;
+                }
+
             }
+
+
+        }
+
+        System.out.println("\n" + "STATS: ammount verses in one document");
+        for (Map.Entry<Integer, Integer> entry : versesStats.entrySet()) {
+            System.out.println(Integer.toString(entry.getKey()) + ": " + Integer.toString(entry.getValue()) + "x");
         }
 
         System.out.println("\n" + Integer.toString(processedLines) + " lines indexed");

@@ -125,7 +125,8 @@ public class Search {
         while (true) {
             if (queries == null && queryString == null) {
                 // prompt the user
-                System.out.println("Enter query: ");
+                System.out.println(AnsiColor.ANSI_PURPLE + new String(new char[100]).replace("\0", "*"));
+                System.out.println(AnsiColor.ANSI_PURPLE + "Enter query: " + AnsiColor.ANSI_RESET);
             }
 
             String line = queryString != null ? queryString : in.readLine();
@@ -140,7 +141,7 @@ public class Search {
             }
 
             Query query = parser.parse(line);
-            System.out.println("Searching for: " + query.toString(field));
+            System.out.println(AnsiColor.ANSI_BLUE + "Searching for: " + AnsiColor.ANSI_YELLOW + query.toString(field) + AnsiColor.ANSI_RESET);
 
             if (repeat > 0) {
                 // repeat & time as benchmark
@@ -176,17 +177,42 @@ public class Search {
         TopDocs results = searcher.search(query, 5 * hitsPerPage);
         ScoreDoc[] hits = results.scoreDocs;
 
+        int numTotalHits = results.totalHits;
+
+        int start = 0;
+        int end = Math.min(numTotalHits, hitsPerPage);
+
+        // there are no entries, show spellchecker if available
+        DirectSpellChecker directSpellChecker = new DirectSpellChecker();
+
+        String[] searchWords = query.toString(field).split(" ");
+        ArrayList<String> didYouMeanWords = new ArrayList<>();;
+        boolean foundAlternative = false;
+        for (String searchWord : searchWords) {
+            SuggestWord[] suggestions = directSpellChecker.suggestSimilar(new Term(field, searchWord), 1, reader, SuggestMode.SUGGEST_MORE_POPULAR);
+            String didYouMean = searchWord;
+            if (suggestions.length > 0) {
+                didYouMean = suggestions[0].string;
+                foundAlternative = true;
+            }
+            didYouMeanWords.add(didYouMean);
+        }
+        if (foundAlternative) {
+            System.out.println(AnsiColor.ANSI_BLUE + "Did you mean: " + AnsiColor.ANSI_RESET + AnsiColor.ANSI_CYAN + String.join(" ", didYouMeanWords) + AnsiColor.ANSI_RESET);
+        } else {
+            if (!interactive || end == 0) {
+                System.out.println(AnsiColor.ANSI_BLUE  + "Sorry, there are also no similar words known" + AnsiColor.ANSI_RESET);
+            }
+        }
+
+
+        System.out.println(AnsiColor.ANSI_YELLOW + numTotalHits + AnsiColor.ANSI_BLUE + " total matching documents" + AnsiColor.ANSI_RESET);
+
         // highlighting - src: http://makble.com/how-to-do-lucene-search-highlight-example
         SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter(AnsiColor.ANSI_YELLOW, AnsiColor.ANSI_RESET);
 
         QueryScorer queryScorer = new QueryScorer(query);
         Highlighter highlighter = new Highlighter(htmlFormatter, queryScorer);
-
-        int numTotalHits = results.totalHits;
-        System.out.println(numTotalHits + " total matching documents");
-
-        int start = 0;
-        int end = Math.min(numTotalHits, hitsPerPage);
 
         while (true) {
             if (end > hits.length) {
@@ -217,59 +243,39 @@ public class Search {
                 TokenStream tokenStream = TokenSources.getTokenStream(field, reader.getTermVectors(i), content, new GermanAnalyzer(), -1);
                 TextFragment[] frag = new TextFragment[0];
                 try {
-                    frag = highlighter.getBestTextFragments(tokenStream, content, false, 4);
+                    frag = highlighter.getBestTextFragments(tokenStream, content, false, 50);
                 } catch (InvalidTokenOffsetsException e) {
                     e.printStackTrace();
                 }
                 String contentHighlighted = "";
                 for (int j = 0; j < frag.length; j++) {
-                    if ((frag[j] != null) && (frag[j].getScore() > 0)) {
+                    // if ((frag[j] != null) && (frag[j].getScore() > 0)) {
+                    if (frag[j] != null) {
                         contentHighlighted += frag[j].toString();
                     }
                 }
 
-                String resultLine = (i + 1) + ".\t" + contentHighlighted + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book"))) + " " + doc.get("chapter") + "," + doc.get("verse");
+                String resultLine = AnsiColor.ANSI_BLUE + (i + 1) + ".\t" + AnsiColor.ANSI_RESET + contentHighlighted + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book"))) + " " + doc.get("chapter") + "," + doc.get("verse");
                 System.out.println(resultLine);
             }
 
             if (!interactive || end == 0) {
-                // there are no entries, show spellchecker if available
-                DirectSpellChecker directSpellChecker = new DirectSpellChecker();
-
-                String[] searchWords = query.toString(field).split(" ");
-                ArrayList<String> didYouMeanWords = new ArrayList<>();;
-                boolean foundAlternative = false;
-                for (String searchWord : searchWords) {
-                    SuggestWord[] suggestions = directSpellChecker.suggestSimilar(new Term(field, searchWord), 1, reader, SuggestMode.SUGGEST_MORE_POPULAR);
-                    String didYouMean = searchWord;
-                    if (suggestions.length > 0) {
-                        didYouMean = suggestions[0].string;
-                        foundAlternative = true;
-                    }
-                    didYouMeanWords.add(didYouMean);
-                }
-                if (foundAlternative) {
-                    System.out.println("Did you mean: " + String.join(" ", didYouMeanWords));
-                } else {
-                    System.out.println("Sorry, there are no similar words known");
-                }
-
                 break;
             }
 
             if (numTotalHits >= end) {
                 boolean quit = false;
                 while (true) {
-                    System.out.print("Press ");
+                    System.out.print(AnsiColor.ANSI_PURPLE + "Press ");
                     if (start - hitsPerPage >= 0) {
                         System.out.print("(p)revious page, ");
                     }
                     if (start + hitsPerPage < numTotalHits) {
                         System.out.print("(n)ext page, ");
                     }
-                    System.out.println("(q)uit or enter number to jump to a page.");
+                    System.out.println("(q)uit or enter number to jump to a page:" + AnsiColor.ANSI_RESET);
 
-                    String line = in.readLine();
+                    String line = in.readLine().trim();
                     if (line.length() == 0 || line.charAt(0) == 'q') {
                         quit = true;
                         break;
@@ -294,7 +300,7 @@ public class Search {
                             start = (page - 1) * hitsPerPage;
                             break;
                         } else {
-                            System.out.println("No such page");
+                            System.out.println(AnsiColor.ANSI_RED + "No such page" + AnsiColor.ANSI_RESET);
                         }
                     }
                 }
