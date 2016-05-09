@@ -89,16 +89,18 @@ Die unerwünschte Satztrennung lässt sich einfach beheben, indem weiterhin grun
 Allerdings gibt es die Ausnahme, dass wenn der Vers am Ende keinen abgeschlossenen Satz hat, der nächste Satz ebenfalls zum selben \gls{glos:documentLabel} hinzugefügt wird.
 
 Ob der Satz abgeschlossen ist, lässt sich am einfachsten überprüfen indem das letzte Zeichen mit gültigen Satzendzeichen verglichen wird:
-"`."' \textit{(Punkt)},
-"`?"' \textit{(Fragezeichen)},
-"`!"' \textit{(Ausrufezeichen)},
-"`;"' \textit{(Semikolon)},
-"`"'"' \textit{(Anführungszeichen)}.
+\begin{itemize}
+	\item "`."' \textit{(Punkt)}
+	\item "`?"' \textit{(Fragezeichen)}
+	\item "`!"' \textit{(Ausrufezeichen)}
+	\item "`;"' \textit{(Semikolon)}
+	\item "`"'"' \textit{(Anführungszeichen)}
+\end{itemize}
 
 Um später die genaue Fundstelle anzugeben, muss das \gls{glos:documentLabel} mit der Verslänge erweitert und in den \gls{glos:indexLabel} aufgenommen werden.
 
 Die Stellenangabe wird dann wie folgt aussehen:\\
-"`[Buch Abk.], [Kapitel],[Vers[-(Vers + Verslänge)]]"'
+$[Buch Abk.], [Kapitel],[Vers[-(Vers + Verslänge)]]$
 
 \subsubsection{Kontext Optimierung}
 \label{sec:contextOptimaze}
@@ -171,6 +173,7 @@ Dabei werden bereits grundlegende Verbesserungen vollzogen:\footcite{Inner_worki
 \end{itemize}
 
 
+\newpage
 \subsection{Index Optimierungen}
 
 \subsubsection{Satztrennung und Kontextberücksichtigung}
@@ -238,6 +241,8 @@ Ausserdem ist der prozentuale Zeitanstieg für die \gls{glos:indexingLabel} mit 
 		Index Grösse (MB) & \multicolumn{2}{r||}{9.1} & \multicolumn{2}{r||}{7.4} & \multicolumn{2}{r||}{3.8}\\
 	\end{tabularx}
 \end{table}
+
+\todo{Wie genau konnte durch diese Optimierung der Kontext verbessert werden?}
 
 
 \subsubsection{Weitere Optimierungen: der "`forceMerge"'}
