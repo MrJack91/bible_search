@@ -30,7 +30,7 @@
 \newglossaryentry{glos:bibleLabel}{
 	name=Bibel,
 	plural={Bibel},
-	description={Als Bibel (altgr. biblia für „Bücher“; daher auch \textit{Buch der Bücher}) bezeichnet man eine Schriftensammlung, die im Judentum und Christentum als Heilige Schrift mit normativem Anspruch für die ganze Religionsausübung gilt.\footcite{Bibel_Wikipedia_2016-05-07}. Die Bibel 66 Bücher mit 1189 Kapiteln und mehr als 31.100 Versen.}
+	description={Als Bibel (altgr. \textit{biblia} für „Bücher“; daher auch \textit{Buch der Bücher}) bezeichnet man eine Schriftensammlung, die im Judentum und Christentum als Heilige Schrift mit normativem Anspruch für die ganze Religionsausübung gilt.\footcite{Bibel_Wikipedia_2016-05-07}. Die Bibel besteht aus 66 Büchern mit 1189 Kapiteln und mehr als 31.100 Versen.}
 }
 
 \newglossaryentry{glos:bibleReaderLabel}{
@@ -54,8 +54,8 @@
 	name=Indexierung,
 	plural={Indexierungen},
 	description={
-		Indexierung bezeichnet die Generierungs-Phase des \gls{glos:indexLabel}s.
-		Bei der Indexierung werden \gls{glos:documentLabel} dem \gls{glos:indexLabel} hinzugefügt.
+		Indexierung bezeichnet die Generierungs-Phase des \gls{glos:indexLabel}es. \todo{des Index oder des Indexes?}
+		Bei der Indexierung werden \glspl{glos:documentLabel} dem \gls{glos:indexLabel} hinzugefügt.
 	}
 }
 
@@ -63,7 +63,7 @@
 	name=Dokument,
 	plural={Dokumente},
 	description={		
-		Ein Dokument ist eine Einheit der Suche und des Indexes, eine Entität nach der gesucht werden kann.
+		Ein Dokument ist eine Einheit der Suche und des Indexes; eine Entität nach der gesucht werden kann.
 		Ein Index beinhaltet mindestens ein Dokument.
 		Ein Dokument im Kontext von Lucene muss nicht dem gebräuchlichen Begriff eines schriftlichen Dokumentes entsprechen, sondern ist in dieser Arbeit zum Beispiel eine Bibelstelle.
 		Bei der \gls{glos:indexingLabel} werden Dokumente dem \gls{glos:indexLabel} hinzugefügt und beim Suchen werden Dokumente als Ergebnisse vom \gls{glos:indexLabel} empfangen.
@@ -77,8 +77,8 @@
 	description={
 		Bei einer Suche wird für jedes \gls{glos:documentLabel} die Übereinstimmung mit dem Suchbegriff berechnet.
 		Das Ergebnis dieses Wertes heisst Scoring.
-		Desto höher das Scoring ist, umso genauer passt das Ergebnis zu Suche.
-		Für das Scoring werden verschiedene Faktoren berücksichtigt, welche nicht im Rahmen dieses Dokumente erläutert werden.
+		Desto höher das Scoring ist, umso genauer passt das Ergebnis zur Suche.
+		Für das Scoring werden verschiedene Faktoren berücksichtigt, welche nicht im Rahmen dieser Arbeit erläutert werden.
 	}
 }
 
@@ -86,7 +86,7 @@
 	name=Ranking,
 	plural={Rankings},
 	description={
-		Das Ranking definiert die Reihenfolge in der die Suchergebnisse sortiert sind, es lässt sich direkt aus dem Scoring ableiten.
+		Das Ranking definiert die Reihenfolge in der die Suchergebnisse sortiert sind. Es lässt sich direkt aus dem \gls{glos:scoringLabel} ableiten.
 	}
 }
 
@@ -94,7 +94,7 @@
 	name=Wortabstand,
 	plural={Wortabstände},
 	description={
-		Der Wortabstand lässt Rückschluss auf die Wichtigkeit eines Begriffes in einem Dokument ziehen. Wenn zum Beispiel ein Wort mehrmals innerhalb eines kleinem Wortabstandes erwähnt wird, kann eine erhöhte Wichtigkeit dieses Wortes angenommen werden.
+		Der Wortabstand lässt einem Rückschluss auf die Wichtigkeit eines Begriffes in einem Dokument ziehen. Wenn zum Beispiel ein Wort mehrmals innerhalb eines kleinem Wortabstandes erwähnt wird, kann eine erhöhte Wichtigkeit dieses Wortes angenommen werden.
 	}
 }
 
