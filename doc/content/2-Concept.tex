@@ -7,30 +7,65 @@ Dazu sollen \textit{Kriterien für die Messbarkeit} einer Suche und deren Result
 Weiter werden Beispielanfragen definiert, die in allen Suchen ausgeführt werden und so die Basis für den Vergleich mit der neuen Suche bilden.
 
 \section{Kriterien für die Messbarkeit}
-\todo{comming soon...}
+% \todo{comming soon...}
+%Effizienz (Ressourcen Verbrauch)
+%Effektivität (Korrektheit)
 %Precision = (Relevant & Gefunden) / Gefunden
 %	—> Genauigkeit
+% Precision: TP / (TP+FP)
 %Recall = (Relevant & Gefunden) / Relevant
 %	—> Vollständigkeit
+% Recall: TP/Posives = TP / (TP+FN)
+% Benchmarking
+% ressourcen verbrauch
+% Mean average precision: Average precision
+Um die Qualität einer Suche zu messen gibt es verschiedene Kennzahlen, die aus dem Resultat von Beispielanfragen abgeleitet werden können. Diese Kennzahlen erlauben dann einen Vergleich von verschiedenen Suchen.
+
+Die \textit{Precision} bezeichnet die \textbf{Genauigkeit} der Resultate, indem der Anteil von irrelevanten Ergebnissen gemessen wird.
+Somit bedeutet $precision = 0$, dass kein einziges Ergebnis relevant ist.
+Werden hingegen nur korrekte Ergebnisse angezeigt, so gilt $precision = 1$.
+
+Der \textit{Recall} misst die \textbf{Vollständigkeit} der Ergebnisse. Hier bedeutet $recall = 1$, dass alle relevanten Ergebnisse vorhanden sind, während $recall = 0$ heisst, dass keines der Ergebnisse relevant ist.
+
+\begin{align}
+	precision & = \frac{\{relevant \, documents\} \cap \{retrieved \, documents\}}{\{retrieved \, documents\}} \\
+	recall & = \frac{\{relevant \, documents\} \cap \{retrieved \, documents\}}{\{relevant \, documents\}}
+\end{align}
+Dabei bezeichnet $\{relevant \, documents\}$ alle Dokumente, die gefunden werden sollten und $\{retrieved \, documents\}$ alle, die gefunden worden sind, inklusive denen, die gar nicht von Interesse sind.
+Mit $\{relevant \, documents\} \cap \{retrieved \, documents\}$ sind folglich alle gefundenen und gleichzeitig relevanten \glspl{glos:documentLabel} beschrieben.
+
+\textit{Precision} und \textit{Recall} sind insofern abhängig voneinander, weil oft eine Verbesserung des einen gleichzeitig eine Verschlechterung des anderen Wertes mit sich bringt.
+
+Ein extremes Beispiel dafür ist eine Liste mit allen \glspl{glos:documentLabel}n. Der\textit{Recall} wird Eins sein, jedoch die \textit{Precision} wird gegen Null tendieren.
+
+Das Hauptproblem dieser beiden Kennzahlen ist, dass die Anzahl relevanter \glspl{glos:documentLabel} oft nicht bekannt ist. 
+Durch geschicktes Auslesen der Beispielanfragen, kann die Anzahl der relevanten \glspl{glos:documentLabel} durch menschliches Wissen abgeschätzt werden.
+
+Weitere wichtige Kennzahlen sind \textit{Precision at K}, \textit{R-Precision} und \textit{Mean average precision}, die auf Wikipedia genau beschrieben sind.\footcite{Information_retrieval_Wikipedia_the_free_encyclopedia_2016-05-11}
 
 
-\section{Suchanfrage }
+\section{Suchanfrage}
 
 \subsection{Anfrage Typen}
-Die häufigsten Suchanfragen lassen sich in zwei Arten unterteilen:
+Die häufigsten Suchanfragen an eine Bibel lassen sich in zwei Arten unterteilen:
 \begin{itemize}
 	\item \textbf{Fakten orientierte Anfragen}\\
 		Bei der faktenorientierten Anfrage steht der in der Bibel beschriebene Sachverhalt im Vordergrund. Der Nutzer will möglich rasch eine Antwort auf seine Frage "`Wie ist es in der Bibel beschrieben?"' finden.
-
+		
 	\item \textbf{Vers orientierte Anfragen}\\
 		Die Vers orientierte Anfrage soll dem Nutzer helfen, Verse zu gewünschten Themen zu finden.
 		Zudem lässt sich so auch der vollständige Vers inkl. Stellenangabe finden, wenn nur noch der ungefähren Inhalt bekannt ist.
+		
 \end{itemize}
+
+%\todo{Abgrenzung zu Fakteninformation und problemorientierten Informationsbedarf}
+%https://de.wikipedia.org/wiki/Information_Retrieval
+% Der Informationsbedarf ist der Bedarf an handlungsrelevantem Wissen und kann dabei konkret und problemorientiert sein. Beim konkreten Informationsbedarf wird eine Fakteninformation benötigt. Also beispielsweise "Was ist die Hauptstadt von Frankreich?". Die Antwort "Paris" deckt den Informationsbedarf vollständig. Anders ist es beim problemorientierten Informationsbedarf. Hier werden mehrere Dokumente benötigt, um den Bedarf zu stillen. Zudem wird der problemorientierte Informationsbedarf nie ganz gedeckt werden können. Gegebenenfalls ergibt sich aus der erhaltenen Information sogar ein neuer Bedarf oder die Modifikation des ursprünglichen Bedarfs. Beim Informationsbedarf wird vom Nutzer abstrahiert. Das heißt, es wird der objektive Sachverhalt betrachtet.
 
 
 \subsection{Beispielanfragen}
 \label{subsec:exampleQueries}
-
+\todo{Diese Anfragen sind noch nicht definitiv.}
 \begin{table}[H]
 	\centering
 	\small\renewcommand{\arraystretch}{1.4}
