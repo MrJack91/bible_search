@@ -1,6 +1,165 @@
 \chapter{Vergleich zu anderen Suchmaschinen}
-% \label{sec:analyse}
+ \label{sec:compareSearches}
+Um einen Vergleich aufzustellen, werden Beispielanfragen mit der umgesetzten Suche durchgeführt und analysiert.
+Anschliessend werden die Beispielanfragen auf bestehenden Suchen durchgeführt.
 
-%\secref{subsec:exampleQueries}
+\section{Mit der umgesetzten Suche}
+Für die Suche wird mindestens ein Teil der Resultat-Menge aufgelistet. Falsche Resultate werden durchgestrichen dargestellt. Mit gelb werden die explizit verlangten Resultate hervorgehoben.
+Bei den Resultaten die weder gelb noch durchgestrichen sind, stimmt der Context, aber sie waren nicht explizit verlangt.
 
-% Manuell AND Precision / Recall
+Um schlussendlich einen sinnvollen Wert für Precision und Recall zu erhalten, müssen die Ergebnisse noch gruppiert werden.
+Besonders wenn als Ziel einen Bereich von Versen vorgegeben ist.
+Da die Suche an sich vers-/satzbasiert umgesetzt worden ist, müssen die Ergebnisse entsprechend manuell zu den vorgegebenen Versbereichen gruppiert werden.
+
+Ersichtlich wird dies in der Auswertung im \cref{subsec:index_abendmahl}.
+
+
+\subsection{Suche zum Thema Abendmahl}
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Query: Vorkommen des Abendmahles}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Fragestellung: & \textit{Wo wurde das Abendmahl eingeführt?} und \textit{Wo wird es erwähnt?}\\
+		Anfrage-Typ: & \textit{Vers orientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will wissen, wo das Abendmahl erwähnt wird.\\
+		Query: & "`brot AND leib"'\\
+		Erwartung: & 
+		Vers und Stellenangabe:
+		\begin{itemize}[noitemsep]
+			\item Mt 26, 26-28 \gls{lutLabel} ($\rightarrow$ Kontext: 17–29)
+			\item Mk 14, 22 \gls{lutLabel} ($\rightarrow$ Kontext: 12-26)
+			\item Lk 22, 17-20 \gls{lutLabel} ($\rightarrow$ Kontext: 14–20)
+			\item Joh 13,2–4 \gls{lutLabel}
+			\item 1 Kor 11, 24 \gls{lutLabel} ($\rightarrow$ Kontext: 23–27)
+		\end{itemize}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\label{subsec:index_abendmahl}
+Die Suche nach dem Abendmahl (aus \cref{tab:query_abendmahl}), ergibt folgende Ergebnisse:\\
+18 total matching documents
+\begin{itemize}[noitemsep]
+	\item 1.	\st{Denn ein Brot ist's, so sind wir viele ein Leib, dieweil wir alle eines Brotes teilhaftig sind. - 1 Kor 10,17}
+	\item 2.	Der gesegnete Kelch, welchen wir segnen, ist der nicht die Gemeinschaft des Blutes Christi? Das Brot, das wir brechen, ist das nicht die Gemeinschaft des Leibes Christi? - 1 Kor 10,16
+	\item 3.	Welcher nun unwürdig von diesem Brot isset oder von dem Kelch des HERRN trinket, der ist schuldig an dem Leib und Blut des HERRN. - \hl{1 Kor 11,27}
+	\item 4.	Und er nahm das Brot, dankte und brach's und gab's ihnen und sprach: Das ist mein Leib, der für euch gegeben wird; das tut zu meinem Gedächtnis. - \hl{Lk 22,19}
+	\item 5.	Da sie aber aßen, nahm Jesus das Brot, dankte und brach's und gab's den Jüngern und sprach: Nehmet, esset; das ist mein Leib. - \hl{Mt 26,26}
+	\item 6.	Und indem sie aßen, nahm Jesus das Brot, dankte und brach's und gab's ihnen und sprach: Nehmet, esset; das ist mein Leib. - \hl{Mk 14,22}
+	\item 7.	Denn so oft ihr von diesem Brot esset und von diesem Kelch trinket, sollt ihr des HERRN Tod verkündigen, bis daß er kommt. - \hl{1 Kor 11,26}
+	\item 8.	Der Mensch prüfe aber sich selbst, und also esse er von diesem Brot und trinke von diesem Kelch. - \hl{1 Kor 11,28}
+	\item 9.	\st{Da brachten sie Joseph ihr Vieh; und er gab ihnen Brot um ihre Pferde, Schafe, Rinder und Esel. Also ernährte er sie mit Brot das Jahr um all ihr Vieh. - 1 Mo (Gen) 47,17}
+	\item 10.	\st{Ich rief meine Freunde an, aber sie haben mich betrogen. Meine Priester und Ältesten in der Stadt sind verschmachtet; denn sie gehen nach Brot, damit sie ihre Seele laben. - Kla 1,19}
+	\item 11.	\st{Sie sollen auch keine Platte machen auf ihrem Haupt noch ihren Bart abscheren und an ihrem Leib kein Mal stechen. - 3 Mo (Lev) 21,5}
+	\item 12.	Ich habe es von dem HERRN empfangen, das ich euch gegeben habe. Denn der HERR Jesus in der Nacht, da er verraten ward, nahm das Brot,
+	dankte und brach's und sprach: Nehmet, esset, das ist mein Leib, der für euch gebrochen wird; solches tut zu meinem Gedächtnis. - \hl{1 Kor 11,23-24}
+	\item 13.	\st{... nichts mehr übrig vor unserm Herrn denn unsre Leiber und unser Feld. - 1 Mo (Gen) 47,18}
+	\item 14.	\st{Ich habe schier meine Augen ausgeweint, daß mir mein Leib davon wehe tut; ...
+	sprachen: Wo ist Brot und Wein? ... - Kla 2,11-12}
+	\item 15.	Da antwortete Judas, der ihn verriet, und sprach: Bin ich's Rabbi? Er sprach zu ihm: Du sagst es. - \hl{Mt 26,25}
+	\item 16.	denn ich sage euch: Ich werde nicht trinken von dem Gewächs des Weinstocks, bis das Reich Gottes komme. - \hl{Lk 22,18}
+	\item 17.	\st{Als mit den Klugen rede ich; richtet ihr, was ich sage. - 1 Kor 10,15}
+	\item 18.	Zwar des Menschen Sohn geht hin, wie von ihm geschrieben steht; weh aber dem Menschen, durch welchen des Menschen Sohn verraten wird. Es wäre demselben Menschen besser, daß er nie geboren wäre. - \hl{Mk 14,21}
+\end{itemize}
+
+\todo{erklären wie die Zahlen gruppiert worden sind.}
+Recall und Precision lauten wie folgt:
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	\captionabove{Suche zum Thema Abendmahl: Precision und Recall}
+	\label{tab:index_abendmahl}
+	\begin{tabularx}{0.7\textwidth}{ L{0.22\linewidth} | L{0.1\linewidth} | X }%
+		\hline
+		 & Anzahl & Erklärung \\ \hline \hline
+		Relevant: & 5 & \\
+		Relevant \& gefunden: & 4 & Gruppen: 2+2+2+0+4 = 10\\
+		Fehler: & 7 & \\
+		Ignorierte Resultate: & 1 & \\
+		Total Ergebnisse: & 18 & \\
+		Total korrigiert: & 11 & \\
+		\hline
+		\textbf{Recall:} & \textbf{0.8} & $= \frac{4}{5}$\\
+		\textbf{Precision:} & \textbf{0.36} & $= \frac{4}{11}$ \\
+		\hline\hline
+	\end{tabularx}
+\end{table}
+
+
+
+\subsection{Suche zum Sohn von Abraham}
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Query: Sohn von Abraham}
+	\label{tab:query_abendmahl}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wie hiess der Sohn vom Abraham?}\\
+		Anfrage-Typ: & \textit{Fakten orientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will den Namen des Sohnes von Abraham wissen.\\
+		Query: & - \\
+		Erwartung: & Vers und Stellenangabe:
+		"`Dies ist das Geschlecht Isaaks, des Sohnes Abrahams: Abraham zeugte Isaak."' - \textit{1 Mo (Gen) 25,19 \gls{lutLabel}}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Query 2: "`Denn so sehr hat Gott die Welt geliebt, ..."'}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wie heisst der bekannte Vers ähnlich: "`Denn so sehr hat Gott die Welt geliebt, dass..."'}\\
+		Anfrage-Typ: & \textit{Vers orientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will den genauen Vers sehen inkl. Stellenangabe\\
+		Query: & -\\
+		Erwartung: & Vers und Stellenangabe:
+		"`Also hat Gott die Welt geliebt, dass er seinen eingeborenen Sohn gab"' - \textit{Joh 3,16 \gls{lutLabel}}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Query 4: \textit{10 Gebote}}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wo stehen die 10 Gebote?} und \textit{Wie lauten sie?}\\
+		Anfrage-Typ: & \textit{Vers und Fakten orientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will sich über die 10 Gebote informieren.\\
+		Query: & -\\
+		Erwartung: & Vers und Stellenangabe:\\
+		\hline
+	\end{tabularx}
+\end{table}
+

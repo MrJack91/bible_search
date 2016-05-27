@@ -41,14 +41,14 @@ Ein extremes Beispiel dafür ist eine Liste mit allen \glspl{glos:documentLabel}
 Das Hauptproblem dieser beiden Kennzahlen ist, dass die Anzahl relevanter \glspl{glos:documentLabel} oft nicht bekannt ist. 
 Durch geschicktes Auslesen der Beispielanfragen, kann die Anzahl der relevanten \glspl{glos:documentLabel} durch menschliches Wissen abgeschätzt werden.
 
-Weitere wichtige Kennzahlen sind \textit{Precision at K}, \textit{R-Precision} und \textit{Mean average precision}, die auf Wikipedia genau beschrieben sind.\footcite{Information_retrieval_Wikipedia_the_free_encyclopedia_2016-05-11}
+%Weitere wichtige Kennzahlen sind \textit{Precision at K}, \textit{R-Precision} und \textit{Mean average precision}, die auf Wikipedia genau beschrieben sind.\footcite{Information_retrieval_Wikipedia_the_free_encyclopedia_2016-05-11}
 
 
 \section{Suchanfrage}
 
 \subsection{Anfrage Typen}
 Die häufigsten Suchanfragen an eine Bibel lassen sich in zwei Arten unterteilen:
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item \textbf{Fakten orientierte Anfragen}\\
 		Bei der faktenorientierten Anfrage steht der in der Bibel beschriebene Sachverhalt im Vordergrund. Der Nutzer will möglich rasch eine Antwort auf seine Frage "`Wie ist es in der Bibel beschrieben?"' finden.
 		
@@ -61,93 +61,4 @@ Die häufigsten Suchanfragen an eine Bibel lassen sich in zwei Arten unterteilen
 %\todo{Abgrenzung zu Fakteninformation und problemorientierten Informationsbedarf}
 %https://de.wikipedia.org/wiki/Information_Retrieval
 % Der Informationsbedarf ist der Bedarf an handlungsrelevantem Wissen und kann dabei konkret und problemorientiert sein. Beim konkreten Informationsbedarf wird eine Fakteninformation benötigt. Also beispielsweise "Was ist die Hauptstadt von Frankreich?". Die Antwort "Paris" deckt den Informationsbedarf vollständig. Anders ist es beim problemorientierten Informationsbedarf. Hier werden mehrere Dokumente benötigt, um den Bedarf zu stillen. Zudem wird der problemorientierte Informationsbedarf nie ganz gedeckt werden können. Gegebenenfalls ergibt sich aus der erhaltenen Information sogar ein neuer Bedarf oder die Modifikation des ursprünglichen Bedarfs. Beim Informationsbedarf wird vom Nutzer abstrahiert. Das heißt, es wird der objektive Sachverhalt betrachtet.
-
-
-\subsection{Beispielanfragen}
-\label{subsec:exampleQueries}
-\todo{Diese Anfragen sind noch nicht definitiv.}
-\begin{table}[H]
-	\centering
-	\small\renewcommand{\arraystretch}{1.4}
-	\rowcolors{1}{tablerowcolor}{tablebodycolor}
-	%
-	\captionabove{Query 1: Sohn von Abraham}
-	%
-	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
-		\hline
-		Frage: & \textit{Wie hiess der Sohn vom Abraham?}\\
-		Anfrage-Typ: & \textit{Fakten orientierte Anfrage}\\
-		Beschreibung: & Der Nutzer will den Namen des Sohnes von Abraham wissen.\\
-		Query: & - \\
-		Erwartung: & Vers und Stellenangabe:
-		"`Dies ist das Geschlecht Isaaks, des Sohnes Abrahams: Abraham zeugte Isaak."' - \textit{1 Mo (Gen) 25,19 \gls{lutLabel}}\\
-		\hline
-	\end{tabularx}
-\end{table}
-
-
-
-\begin{table}[H]
-	\centering
-	\small\renewcommand{\arraystretch}{1.4}
-	\rowcolors{1}{tablerowcolor}{tablebodycolor}
-	%
-	\captionabove{Query 2: "`Denn so sehr hat Gott die Welt geliebt, ..."'}
-	%
-	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
-		\hline
-		Frage: & \textit{Wie heisst der bekannte Vers ähnlich: "`Denn so sehr hat Gott die Welt geliebt, dass..."'}\\
-		Anfrage-Typ: & \textit{Vers orientierte Anfrage}\\
-		Beschreibung: & Der Nutzer will den genauen Vers sehen inkl. Stellenangabe\\
-		Query: & -\\
-		Erwartung: & Vers und Stellenangabe:
-		"`Also hat Gott die Welt geliebt, dass er seinen eingeborenen Sohn gab"' - \textit{Joh 3,16 \gls{lutLabel}}\\
-		\hline
-	\end{tabularx}
-\end{table}
-
-\todo{folgende Queries 3\&4 ergänzen}
-
-\begin{table}[H]
-	\centering
-	\small\renewcommand{\arraystretch}{1.4}
-	\rowcolors{1}{tablerowcolor}{tablebodycolor}
-	%
-	\captionabove{Query 3: Abendmahl Ersterwähnung}
-	%
-	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
-		\hline
-		Frage: & \textit{Wo wurde das Abendmahl hinzugefügt?}\\
-		Anfrage-Typ: & \textit{Fakten orientierte Anfrage}\\
-		Beschreibung: & Der Nutzer den Kontext vom Abendmahl finden.\\
-		Query: & -\\
-		Erwartung: & Vers und Stellenangabe: \\
-		\hline
-	\end{tabularx}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\small\renewcommand{\arraystretch}{1.4}
-	\rowcolors{1}{tablerowcolor}{tablebodycolor}
-	%
-	\captionabove{Query 4: \textit{10 Gebote}}
-	%
-	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
-		\hline
-		Frage: & \textit{Wo stehen die 10 Gebote?} und \textit{Wie lauten sie?}\\
-		Anfrage-Typ: & \textit{Vers und Fakten orientierte Anfrage}\\
-		Beschreibung: & Der Nutzer will sich über die 10 Gebote informieren.\\
-		Query: & -\\
-		Erwartung: & Vers und Stellenangabe:\\
-		\hline
-	\end{tabularx}
-\end{table}
-
-
-% Weitere Themen:
-% - Wer sucht der wird finden.. -> math 7.7
-% - Homosexualität
-% - Der HERR segne dich und behüte dich; der HERR lasse sein Angesicht leuchten über dir und sei dir gnädig; der HERR hebe sein Angesicht über dich und gebe dir Frieden. - 4 Mose 6:24-26 | LUT |
-% Nächsten Liebe
 

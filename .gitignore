@@ -2,6 +2,8 @@
 code/additionalStuff
 code/src/demo/
 code/index/
+code/out/
+code/src/META-INF/
 
 #general
 .idea

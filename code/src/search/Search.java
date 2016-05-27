@@ -14,6 +14,11 @@ package search;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ *
+ * - Build artifact
+ * - run in code folder: java -jar out/artifacts/bible_search_jar/bible_search.jar
+ *
  */
 
 
@@ -280,7 +285,7 @@ public class Search {
                 String resultLine = AnsiColor.ANSI_BLUE + (i + 1) + ".\t" + AnsiColor.ANSI_RESET
                         + contentHighlighted
                         + " - " + books.getBookNameAbr().get(Integer.parseInt(doc.get("book")))
-                        + " " + doc.get("chapter") + "," + versText
+                        + " " + doc.get("chapter") + ", " + versText
                         // + "\n\t\tC: " + doc.get("context")
                 ;
                 System.out.println(resultLine);

@@ -13,7 +13,7 @@ Die Resultate sollen nach einem sinnvollen \gls{glos:rankingLabel} sortiert werd
 Zugunsten einer raschen Erkennbarkeit ist eine farbliche Hervorhebung (Highlighting) der Suchbegriffe in der Resultat-Liste wünschenswert.
 
 \textbf{Beispiel der Resultat-Liste mit Ergebnissen:}
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item Da wurden sie alle gutes Muts und nahmen auch Speise. - Apg 27,36
 	\item Was setzt sich dein Mut gegen Gott, dass du solche Reden aus deinem Munde lässest? - Hiob 15,13
 	\item Ein Geduldiger ist besser denn ein Starker, und der seines Mutes Herr ist, denn der Städte gewinnt. - Spr 16,32
@@ -35,7 +35,7 @@ Dazu muss die Struktur der Bibel, sowie die Grammatik berücksichtigt werden.
 
 \subsection{Möglichkeiten für die Definition der Dokumentgrösse}
 Für die Aufteilung der \glspl{glos:documentLabel} gibt es verschiedene Varianten:
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item ganzer Text als ein \gls{glos:documentLabel}
 	\item pro Buch ein \gls{glos:documentLabel}
 	\item pro Kapitel ein \gls{glos:documentLabel}
@@ -64,12 +64,12 @@ Ganz grob könnten so allenfalls die Hauptthemen der Bücher überprüft werden.
 Selbst eine Aufteilung nach Kapitel ist zu grob, da die Kapitel keine einheitliche Länge habe und auch hier ist ein Kapitel oft nicht auf ein Thema beschränkt.
 Ein Kapitel kann mehrere Themen behandeln, so wie aber auch Themen über mehrere Kapitel erläutert werden können.
 
-Wenn man sich die Anwendungsfälle der Beispielanfragen (im \secref{subsec:exampleQueries}) vor Augen führt, lässt sich ebenfalls daraus schliessen, dass eine kleinere und übersichtlichere Einheit benötigt wird.
+Wenn man sich die Anwendungsfälle der Beispielanfragen (im \secref{sec:compareSearches}) vor Augen führt, lässt sich ebenfalls daraus schliessen, dass eine kleinere und übersichtlichere Einheit benötigt wird.
 
 \subsubsection{Möglichkeit: Pro Vers ein Dokument}
 Wenn jeder Vers in ein \gls{glos:documentLabel} gepackt wird, erreichen wir bereits sehr gute Ergebnisse.
 Es treten allerdings zwei Probleme auf:
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item \textbf{Satztrennung}: die gelegentliche Trennung von ganzen Sätzen\\
 	Da die Einteilung der Verse keinen grammatikalischen Regeln unterliegt, kommt es mehrmals vor, dass einzelne Teilsätze als alleinstehende \glspl{glos:documentLabel} erstellt wurden. Dies macht in den meisten Fällen keinen Sinn.
 	\item \textbf{Kontext Berücksichtigung}: der Kontext ist sehr beschränkt\\
@@ -89,7 +89,7 @@ Die unerwünschte Satztrennung lässt sich einfach beheben, indem weiterhin grun
 Allerdings gibt es die Ausnahme, dass wenn der Vers am Ende keinen abgeschlossenen Satz hat, der nächste Satz ebenfalls zum selben \gls{glos:documentLabel} hinzugefügt wird.
 
 Ob der Satz abgeschlossen ist, lässt sich am einfachsten überprüfen indem das letzte Zeichen mit folgenden erlaubten Satzendzeichen verglichen wird:
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item "`."' \textit{(Punkt)}
 	\item "`?"' \textit{(Fragezeichen)}
 	\item "`!"' \textit{(Ausrufezeichen)}
@@ -145,7 +145,7 @@ Apache Lucene bietet dazu bereist die notwendigen Möglichkeiten, welche nur kor
 
 Die \glspl{glos:documentLabel} werden gesammelt und vom \textit{Analyzer} bewertet. Für die deutsche Sprache kann der \textit{German Analyzer} genutzt werden.
 Dabei werden bereits grundlegende Verbesserungen vollzogen:\footcite{Inner_workings_of_the_German_Analyzer_in_Lucene_2016-05-08}
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item \textbf{Lowercase Filtering}\\
 	Der ganze Text wird in Kleinbuchstaben umgewandelt, so dass Gross-/Kleinschreibung vollständig ignoriert werden können.
 
@@ -186,7 +186,7 @@ Bei der Satztrennungs-Optimierung wurde die Dokumentaufteilung wie folgt veränd
 Am Anfang war jeder Vers ein Dokument, was 31'103 Dokumente ergab.
 Nach der Optimierung waren es noch 26'433 Dokumente, was einer Reduktion von 4'670 Dokumenten entspricht.
 
-Dabei wurden die Versen wie folgt zusammengefasst:
+Dabei wurden die Versen wie folgt zu neuen Dokumenten zusammengefasst:
 \begin{table}[H]
 	\centering
 	\small\renewcommand{\arraystretch}{1.4}
@@ -195,7 +195,7 @@ Dabei wurden die Versen wie folgt zusammengefasst:
 	\captionabove{Satztrennungs-Übersicht}
 	%
 	\begin{tabularx}{0.5\textwidth}{ R{0.2\linewidth} | Y }%
-		\textbf{Dokumentgrösse} & \textbf{Anzahl Vorkommnisse}\\ \hline \hline
+		\textbf{Verslänge pro Dokument} & \textbf{Anzahl Vorkommnisse}\\ \hline \hline
 		1 & 22'886\\
 		2 & 2'841\\
 		3 & 481\\
@@ -219,7 +219,7 @@ Dabei wurden die Versen wie folgt zusammengefasst:
 %\vspace{0.5em}
 \textit{Kontextberücksichtigung}
 \vspace{0.5em}\\
-\todo{Reihenfolge von Kontextberücksichtigungn und der ForceMerge überprüfen!}
+\todo{Reihenfolge von Kontextberücksichtigungen und der ForceMerge überprüfen!}
 Die Kontextoptimierung wurde ebenfalls durchgeführt. Dies wirkt sich stark auf die \gls{glos:indexingLabel}s-Zeit aus.
 Folgende Tabelle zeigt die Dauer der Indexierung auf, abhängig ob der Kontext mit je drei benachbarten Versen \textit{indexiert \& gespeichert}, \textit{nur indexiert} oder \textit{gar nicht} in den Index aufgenommen worden ist.
 Ausserdem ist der prozentuale Zeitanstieg für die \gls{glos:indexingLabel} mit \textit{forceMerge} je Indextyp angegeben.
@@ -294,7 +294,7 @@ Für den Suchbegriff müssen die gleichen Optimierungen wie für die \gls{glos:i
 
 \section{Features}
 Obwohl die Suche nur via \gls{cliLabel} bedient werden kann, sollen trotzdem grundlegende Features zur Verfügung gestellt werden:
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item \textit{Paging}:
 	Die Suchresultate sollen gemäss dem \gls{glos:rankingLabel} aufgelistet werden. Es soll das Total der Ergebnissen angezeigt werden. Anschliessend sollen jeweils Seiten mit je 10 Ergebnissen folgen, durch die dann navigiert werden kann.
 	Die Navigation soll die Möglichkeit bieten zur nächsten Seite, zur vorgängigen Seite und zu einer bestimmten Seite zu wechseln.
