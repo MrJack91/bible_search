@@ -1,7 +1,6 @@
 \chapter{Umsetzung der Suchmaschine}
 In diesem Kapitel wird die Umsetzung der Suchmaschine beschrieben.
 
-\todo{dieser Text ist wiederholt - notwendig?}
 Die Suche soll mit Apache Lucene umgesetzt werden. Für die Bedienung genügt in erster Linie ein \gls{cliLabel}.
 Aus rechtlichen Gründen, so wie aus Gründen der Verfügbarkeit wird als Grundlage eine \gls{lutLabel}-Übersetzung der Bibel verwendet.
 
@@ -183,17 +182,18 @@ Dabei werden bereits grundlegende Verbesserungen vollzogen:\footcite{Inner_worki
 \newpage
 \subsection{Index Optimierungen}
 
-\subsubsection{Satztrennung und Kontextberücksichtigung}
-Die Optimierungen aus \secref{sec:documentOptimazing} wurden beide eingebaut.
+%\subsubsection{Satztrennung und Kontextberücksichtigung}
+Die Optimierungen aus \secref{sec:documentOptimazing} wurden beide implementiert.
 
-\vspace{0.5em}
-\textit{Satztrennung}
-\vspace{0.5em}\\
+%\vspace{0.5em}
+%\textit{Satztrennung}
+%\vspace{0.5em}\\
+\subsubsection{Satztrennung}
 Bei der Satztrennungs-Optimierung wurde die Dokumentaufteilung wie folgt verändert.
-Am Anfang war jeder Vers ein Dokument, was 31'103 Dokumente ergab.
-Nach der Optimierung waren es noch 26'433 Dokumente, was einer Reduktion von 4'670 Dokumenten entspricht.
+Am Anfang war jeder Vers ein Dokument, was 31'103 \glspl{glos:documentLabel} ergab.
+Nach der Optimierung waren es noch 26'433 \glspl{glos:documentLabel}, was einer Reduktion von 4'670 \glspl{glos:documentLabel}n entspricht.
 
-Dabei wurden die Versen wie folgt zu neuen Dokumenten zusammengefasst:
+Dabei wurden die Versen wie folgt zu neuen \glspl{glos:documentLabel}n zusammengefasst:
 \begin{table}[H]
 	\centering
 	\small\renewcommand{\arraystretch}{1.4}
@@ -223,10 +223,38 @@ Dabei wurden die Versen wie folgt zu neuen Dokumenten zusammengefasst:
 \end{table}
 
 \newpage
-%\vspace{0.5em}
-\textit{Kontextberücksichtigung}
-\vspace{0.5em}\\
-\todo{Reihenfolge von Kontextberücksichtigungen und der ForceMerge überprüfen!}
+\subsubsection{Exkurs: der "`forceMerge"'}
+Der \gls{glos:indexLabel} der \glspl{glos:documentLabel} wird jeweils in verschiedene Segmente zusammengefasst, was verschiedenen \gls{glos:indexLabel}-Levels entspricht.
+
+\begin{framed}
+	\textbf{Beispiel}: Namensverzeichnisses mit verschiedenen Segmenten
+	
+	Die Gruppierung der \glspl{glos:documentLabel} erfolgt hierarchisch strukturiert.
+	
+	A -- C $\rightarrow$ A $\rightarrow$ Alexandra - Andrea
+	
+	Dabei entspricht jeder Teil einem Segment.
+\end{framed}
+
+Mit der Methode $forceMerge(n)$ kann der \gls{glos:indexLabel} zu $n$ Segmenten zusammengefügt werden, was sich positiv auf die Suchzeit auswirkt. Allerdings ist diese Operation sehr kostenaufwändig und wird für grosse, dynamische \glspl{glos:indexLabel} nicht empfohlen.
+
+Anscheinend wurde die Handhabung von mehreren Segmenten in Lucene in ab Version 3.5 deutlich verbessert, was die Option seltener notwendig macht.\footcite{LUCENE-rename_optimize_to_a_less_cool-sounding_name_ASF_JIRA_2016-05-08}
+
+\begin{framed}
+	\textbf{Einblick in die Index-Generierung mit und ohne \textit{forceMerge}}
+	
+	Für den relativ kleinen \gls{glos:indexLabel} der Bibel, kann der \textit{forceMerge} problemlos durchgeführt werden.
+	Die \gls{glos:indexingLabel} ohne \textit{forceMerge} dauert auf dem Testsystem durchschnittlich 2.8 Sekunden. Mit dem \textit{forceMerge} dauert der Prozess 3.5 Sekunden ($+0.7$ Sekunden).
+	
+	Obwohl  der \gls{glos:indexLabel} immer noch sehr schnell zusammengestellt wird \ul{verlängert sich der Prozess mit \textit{forceMerge} um 25\%!}
+	
+	Daraus wird schnell ersichtlich, dass die Operation nur mit Vorsicht auf grosse \glspl{glos:indexLabel} angewandt werden darf.
+\end{framed}
+
+
+%\textit{Kontextberücksichtigung}
+%\vspace{0.5em}\\
+\subsubsection{Kontextberücksichtigung}
 Die Kontextoptimierung wurde ebenfalls durchgeführt. Dies wirkt sich stark auf die \gls{glos:indexingLabel}s-Zeit aus.
 Folgende Tabelle zeigt die Dauer der Indexierung auf, abhängig ob der Kontext mit je drei benachbarten Versen \textit{indexiert \& gespeichert}, \textit{nur indexiert} oder \textit{gar nicht} in den Index aufgenommen worden ist.
 Ausserdem ist der prozentuale Zeitanstieg für die \gls{glos:indexingLabel} mit \textit{forceMerge} je Indextyp angegeben.
@@ -250,36 +278,18 @@ Ausserdem ist der prozentuale Zeitanstieg für die \gls{glos:indexingLabel} mit 
 	\end{tabularx}
 \end{table}
 
-\todo{Wie genau konnte durch diese Optimierung der Kontext verbessert werden?}
+\vspace{0.5em}
+\textit{Auswertung der Kontextberücksichtigung}
+\vspace{0.5em}\\
+Die Kontextoptimierung funktioniert grundsätzlich wie geplant. Auf Grund der beschränkten Zeit des Projektes, kann der genaue Effekt dieser Optimierung nicht genauer bemessen werden.
 
+Ein Nachteil der Kontextberücksichtigung ist, dass Verse die den Suchbegriff nur in den Nachbarsversen beinhalten trotzdem in der Resultat Liste erscheinen.
+Durch die niedrige Gewichtung (auch Boost genannt) von ungefähr 0.7, erscheinen diese Verse nach den Treffern, jedoch wird dadurch trotzdem die Precision, bei der die Anzahl Ergebnisse verwendet wird, negativ beeinflusst.
 
-\subsubsection{Weitere Optimierungen: der "`forceMerge"'}
-Der \gls{glos:indexLabel} der \glspl{glos:documentLabel} wird jeweils in verschiedene Segmente zusammengefasst, was verschiedenen \gls{glos:indexLabel}-Levels entspricht.
-
-\begin{framed}
-	\textbf{Beispiel}: Namensverzeichnisses mit verschiedenen Segmenten
-
-	Die Gruppierung der \glspl{glos:documentLabel} erfolgt hierarchisch strukturiert.
-
-	A -- C $\rightarrow$ A $\rightarrow$ Alexandra - Andrea
-
-	Dabei entspricht jeder Teil einem Segment.
-\end{framed}
-
-Mit der Methode $forceMerge(n)$ kann der \gls{glos:indexLabel} zu $n$ Segmenten zusammengefügt werden, was sich positiv auf die Suchzeit auswirkt. Allerdings ist diese Operation sehr kostenaufwändig und wird für grosse, dynamische \glspl{glos:indexLabel} nicht empfohlen.
-
-Anscheinend wurde die Handhabung von mehreren Segmenten in Lucene in ab Version 3.5 deutlich verbessert, was die Option seltener notwendig macht.\footcite{LUCENE-rename_optimize_to_a_less_cool-sounding_name_ASF_JIRA_2016-05-08}
-
-\begin{framed}
-	\textbf{Einblick in die Index-Generierung mit und ohne \textit{forceMerge}}
-
-	Für den relativ kleinen \gls{glos:indexLabel} der Bibel, kann der \textit{forceMerge} problemlos durchgeführt werden.
-	Die \gls{glos:indexingLabel} ohne \textit{forceMerge} dauert auf dem Testsystem durchschnittlich 2.8 Sekunden. Mit dem \textit{forceMerge} dauert der Prozess 3.5 Sekunden ($+0.7$ Sekunden).
-
-	Obwohl  der \gls{glos:indexLabel} immer noch sehr schnell zusammengestellt wird \ul{verlängert sich der Prozess mit \textit{forceMerge} um 25\%!}
-
-	Daraus wird schnell ersichtlich, dass die Operation nur mit Vorsicht auf grosse \glspl{glos:indexLabel} angewandt werden darf.
-\end{framed}
+Bei einer Suchmaschine mit Ranking, spielt dieses Total der Ergebnisse keine zentrale Rolle, weil der Nutzer oft nur einen kleinen Teil der Ergebnismenge anschaut.
+Somit ist der genannte Nebeneffekt vertretbar.
+Zudem kann es sogar vorkommen, dass der Benutzer ausschliesslich auf Grund der Vielfalt von indexierbarem Inhalt doch ein Ergebnis findet.
+Ganz nach dem Grundsatz: lieber ein Ergebnis mit tiefem Score, als kein Ergebnis.
 
 
 \subsection{Indexierte Felder}
@@ -311,8 +321,6 @@ Obwohl die Suchmaschine nur via \gls{cliLabel} bedient werden kann, sollen trotz
 
 	\item \textit{Suggest}:
 	Falls ähnlich geschriebene Begriffe im Index vorkommen, soll eine Funktion "`Did you mean:"' den ähnlichsten Begriffen anzeigen.
-	
-	% \item \textit{Synonym Expansion}:
 	
 \end{itemize}
 

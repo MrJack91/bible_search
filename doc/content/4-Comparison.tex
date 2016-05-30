@@ -3,18 +3,29 @@
 Um einen Vergleich aufzustellen, werden Beispielanfragen mit der umgesetzten Suchmaschine durchgeführt und analysiert.
 Anschliessend werden die Beispielanfragen auf externen Suchmaschinen durchgeführt.
 
-\section{Bewertung der umgesetzten Suchmaschine}
+\section{Allgemeine Informationen zum Vergleich}
 Für jede Suche wird mindestens ein Teil der Resultat-Menge aufgelistet.
 
 Da die umgesetzte Suche vers- oder genauer satzbasiert umgesetzt worden ist, müssen die Ergebnisse entsprechend manuell zu den vorgegebenen relevanten Bibelstellen gruppiert werden.
 So kann schlussendlich ein sinnvoller Wert für die Precision und den Recall berechnet werden.
-Ersichtlich wird dies in der Auswertung im \cref{subsec:index_abendmahl}.
+Ersichtlich wird dies z.B. in der Auswertung im \cref{sec:index_abendmahl}.
+
+
+\subsection{Die externen Suchmaschinen}
+Es sind drei externe Suchmaschinen bekannt: der BibleServer.com\footcite{BibleServer_Die_Bibel_fr_alle_2016-05-30}, der BibleGateway.com\footcite{BibleGateway_2016-05-30} und die Android App \textit{Bible} von Life.Church \footcite{Bible_Android_Apps_on_Google_Play_2016-05-30}.
+
+Während der Nutzung von BibleServer und BibleGateway wurde bekannt, dass beide Suchmaschinen die exakt selben Resultate liefern.
+Auf Grund dessen, wird folgend die BibleServer ignoriert. Die gleichen Kennzahlen treffen aber auch auf die BibleServer-Suchmaschine zu.
+Nur die Android App unterstützt ein Ranking. Bei den anderen Suchmaschinen werden die Resultate gemäss der traditionellen Reihenfolge der Bibel sortiert dargestellt.
+
+Als Grundlage wird weiterhin überall die \gls{lutLabel} Übersetzung verwendet.
+
 
 % **********************************************************************************
 
 \newpage
-\subsection{Suche zum Thema Abendmahl}
-\label{subsec:index_abendmahl}
+\section{Suche zum Thema Abendmahl}
+\label{sec:index_abendmahl}
 
 \begin{table}[H]
 	\centering
@@ -43,6 +54,7 @@ Ersichtlich wird dies in der Auswertung im \cref{subsec:index_abendmahl}.
 	\end{tabularx}
 \end{table}
 
+\subsection{Mit der umgesetzten Suchmaschine}
 Die Suche nach dem Abendmahl (aus \cref{tab:query_abendmahl}), ergibt die folgenden 18 Ergebnisse.
 Falsche Resultate werden durchgestrichen dargestellt. Mit gelb werden die explizit verlangten Bibelstellen hervorgehoben.
 Bei den Resultaten die weder gelb noch durchgestrichen sind, stimmt der Context, aber sie waren nicht explizit verlangt.\\
@@ -69,7 +81,7 @@ Bei den Resultaten die weder gelb noch durchgestrichen sind, stimmt der Context,
 	\item 18.	Zwar des Menschen Sohn geht hin, wie von ihm geschrieben steht; weh aber dem Menschen, durch welchen des Menschen Sohn verraten wird. Es wäre demselben Menschen besser, daß er nie geboren wäre. - \hl{Mk 14,21}
 \end{itemize}
 
-Um nun den Recall und die Precision zu bestimmen, werden die einzelnen Bibelverse nach den definierten Bereichen gruppiert. 
+Um nun die Precision und den Recall zu bestimmen, werden die einzelnen Bibelverse nach den definierten Bereichen gruppiert. 
 Daraus folgt die Aufteilung in \cref{tab:grouped_results_abendmahl}.
 \begin{table}[H]
 	\centering
@@ -97,7 +109,7 @@ Daraus folgt die Aufteilung in \cref{tab:grouped_results_abendmahl}.
 
 \newpage
 
-Daraus ergibt sich der Recall und die Precision (\cref{tab:index_abendmahl}).
+Daraus ergibt sich die Precision und den Recall (\cref{tab:index_abendmahl}).
 \begin{table}[H]
 	\centering
 	\small\renewcommand{\arraystretch}{1.4}
@@ -113,139 +125,19 @@ Daraus ergibt sich der Recall und die Precision (\cref{tab:index_abendmahl}).
 		Fehler: & 7 & \\
 		Total Ergebnisse: & 18 & \\
 		\hline
-		\textbf{Recall:} & \textbf{0.8} & $= \frac{4}{5}$\\
 		\textbf{Precision:} & \textbf{0.61} & $= \frac{11}{18}$ \\
+		\textbf{Recall:} & \textbf{0.8} & $= \frac{4}{5}$\\
 		\hline\hline
 	\end{tabularx}
 \end{table}
 
-% **********************************************************************************
-
-\newpage
-\subsection{Suche nach dem Namen von Abrahams Sohn}
-\begin{table}[H]
-	\centering
-	\small\renewcommand{\arraystretch}{1.4}
-	\rowcolors{1}{tablerowcolor}{tablebodycolor}
-	%
-	\captionabove{Suche: Name von Abrahams Sohn}
-	%
-	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
-		\hline
-		Frage: & \textit{Wie hiess der Sohn vom Abraham?}\\
-		Anfrage-Typ: & \textit{Fakten orientierte Anfrage}\\
-		Beschreibung: & Der Nutzer will den Namen von Abrahams Sohn wissen.\\
-		Query: & \textit{sohn AND abraham} \\
-		Erwartung: &Vers und Stellenangabe:
-				\begin{itemize}[noitemsep]
-					\item "`Dies ist das Geschlecht Isaaks, des Sohnes Abrahams: Abraham zeugte Isaak."' - \textit{1 Mo (Gen) 25,19 \gls{lutLabel}}
-					\item Weitere Stellen in denen erwähnt wird, dass der Sohn von Abraham Isaak hiess...
-				\end{itemize}\\
-		\hline
-	\end{tabularx}
-\end{table}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1.0\textwidth]{images/4-comparison/search_result_abraham.png}
-	\caption{Resultate der Suche nach dem Namen von Abrahams Sohn}
-\end{figure}
-
-Da hier relativ viele Ergebnisse gefunden werden (71 \glspl{glos:documentLabel}), wird hier eine aus dem Web bekannte Variation der Precision und Recall verwendet; die \textit{Precision at K}. Dabei werden nur die ersten K Einträge bewertet. Dies wird oft bei Suchmaschinen angewendet, da der Nutzer meist nur an den ersten Einträgen interessiert ist.
-Für die vorliegenden Suchen wird $k = 10$ gesetzt.
-
-\begin{table}[H]
-	\centering
-	\small\renewcommand{\arraystretch}{1.4}
-	\rowcolors{1}{tablerowcolor}{tablebodycolor}
-	\captionabove{Suche nach dem Namen von Abrahams Sohn: Precision und Recall}
-	%\label{tab:index_abendmahl}
-	\begin{tabularx}{0.9\textwidth}{ L{0.22\linewidth} | L{0.1\linewidth} | X }%
-		\hline
-		& Anzahl & Erklärung \\ \hline \hline
-		Relevant: & 1 & Es wird eine Information gesucht, die mehrmals bestätigt werden kann.\\
-		Relevant \& gefunden: & 5 & \\
-		Fehler: & 5 & \\
-		Total Ergebnisse: & 10 & \\
-		\hline
-		\textbf{Recall:} & \textbf{5} & $= \frac{5}{1} \rightarrow$ 100\% der Resultate wurde gefunden\\
-		\textbf{Precision:} & \textbf{0.5} & $= \frac{5}{10}$ \\
-		\hline\hline
-	\end{tabularx}
-\end{table}
-
-Diese Suche ist schwierig zu bewerten, da nur eine Information gesucht ist. Trotzdem können mit diesen Werten verschiedene Suchmaschinen miteinander verglichen werden.
 
 % **********************************************************************************
 
-\newpage
-\subsection{Suche nach dem Vers Joh 3,16}
-\begin{table}[H]
-	\centering
-	\small\renewcommand{\arraystretch}{1.4}
-	\rowcolors{1}{tablerowcolor}{tablebodycolor}
-	%
-	\captionabove{Suche: "`Denn so sehr hat Gott die Welt geliebt, ..."'}
-	%
-	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
-		\hline
-		Frage: & \textit{Wie heisst der Vers ähnlich: "`Denn so fest hat Gott die Welt geliebt, dass..."'}. Wo steht er?\\
-		Anfrage-Typ: & \textit{Vers orientierte Anfrage}\\
-		Beschreibung: & Der Nutzer will den genauen Vers inkl. Stellenangabe sehen.\\
-		Query: & \textit{denn so fest hat gott die welt geliebt}\\
-		Erwartung: & Vers und Stellenangabe:
-		"`Also hat Gott die Welt geliebt, daß er seinen eingeborenen Sohn gab, auf daß alle, die an ihn glauben, nicht verloren werden, sondern das ewige Leben haben."' - \textit{Joh 3,16 \gls{lutLabel}}\\
-		\hline
-	\end{tabularx}
-\end{table}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1.0\textwidth]{images/4-comparison/search_result_john3-16.png}
-	\caption{Resultate der Suche nach Joh 3,16}
-\end{figure}
-
-Für diese Suche macht es wenig Sinn die Precision und den Recall zu berechnen, da es nur genau ein relevantes \gls{glos:documentLabel} gibt, dass gefunden werden kann oder nicht.
-Zusätzlich sollte aber die Position des Ergebnisses verglichen werden.
-Die Anzahl der Ergebnisse sagt bei dieser Liste mit Ranking nicht viel aus und wird darum ignoriert.
-
-\begin{table}[H]
-	\centering
-	\small\renewcommand{\arraystretch}{1.4}
-	\rowcolors{1}{tablerowcolor}{tablebodycolor}
-	\captionabove{Suche nach dem bekannten Vers Joh 3,16}
-	%\label{tab:index_abendmahl}
-	\begin{tabularx}{0.6\textwidth}{ L{0.4\linewidth} | X }%
-		\hline
-		Vers gefunden & Ja\\
-		Position des Resultates & 1\\
-		\textit{Total Ergebnisse} & \textit{6304}\\
-		\hline
-	\end{tabularx}
-\end{table}
-
-
-% **********************************************************************************
-% **********************************************************************************
-% **********************************************************************************
-
-\newpage
-\section{Bewertung und Vergleich der externen Suchmaschinen}
-Es sind drei externe Suchmaschinen bekannt: der BibleServer.com\footcite{BibleServer_Die_Bibel_fr_alle_2016-05-30}, der BibleGateway.com\footcite{BibleGateway_2016-05-30} und die Android App \textit{Bible} von Life.Church \footcite{Bible_Android_Apps_on_Google_Play_2016-05-30}.
-
-Während der Nutzung von BibleServer und BibleGateway wurde bekannt, dass beide Suchmaschinen die exakt selben Resultate liefern.
-Auf Grund dessen, wird folgend die BibleServer ignoriert. Die gleichen Kennzahlen treffen aber auch auf die BibleServer-Suchmaschine zu.
-Nur die Android App unterstützt ein Ranking. Bei den anderen Suchen werden die Resultate gemäss der traditionellen Reihenfolge der Bibel sortiert dargestellt.
-
-Als Grundlage wird weiterhin überall die \gls{lutLabel} Übersetzung verwendet.
-
-
-% **********************************************************************************
-
-\subsection{Suche zum Thema Abendmahl}
+\subsection{Mit den externen Suchen}
 Beide externe Suchmaschinen verknüpfen standardmässig alle Begriffe mit \textit{AND}. Also lautet das entsprechende Query "`\textit{leib brot}"'.
 
-Das Resultat beider Suchmaschinen (BibleGateway und der Android App) ist beinahe identisch. Die Reihenfolge entspricht der Liste der Bibel App, da wie erwähnt der BibleGateway kein Ranking unterstützt.
+Das Resultat beider Suchmaschinen (BibleGateway und der Android App) ist beinahe identisch (bis auf das Resultat vom \textit{1 Mo 47,19}). Die Reihenfolge entspricht der Liste der Bibel App, da wie erwähnt der BibleGateway kein Ranking unterstützt.
 \begin{itemize}[noitemsep]
 	\item 1 Kor 10,17
 	\item Mt 26,26
@@ -262,7 +154,6 @@ Die Resultate lassen sich wie folgt gruppieren:
 	\small\renewcommand{\arraystretch}{1.4}
 	\rowcolors{1}{tablerowcolor}{tablebodycolor}
 	\captionabove{Externe Suche zum Thema Abendmahl: Gruppierung der relevanten Dokumenten}
-	%\label{tab:grouped_results_abendmahl}
 	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | L{0.08\linewidth} | X }%
 		\hline
 		Bereich & Treffer & Bibelstelle \\ \hline \hline
@@ -296,29 +187,108 @@ Daraus folgt für die Precision und den Recall die Werte in \cref{tab:index_aben
 		Fehler: & 1 & \\
 		Total Ergebnisse: & 7 & \\
 		\hline
-		\textbf{Recall:} & \textbf{0.8} & $= \frac{4}{5}$\\
 		\textbf{Precision:} & \textbf{0.83 | (0.71)} & $=\frac{5}{6}$ für die Android App und $=\frac{5}{7} $ für den BibleGateway\\
+		\textbf{Recall:} & \textbf{0.8} & $= \frac{4}{5}$\\
 		\hline\hline
 	\end{tabularx}
 \end{table}
 
-\subsubsection{Vergleich der Suchmaschinen}
+\subsection{Vergleich der Suchmaschinen}
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	\captionabove{Fazit der Suche zum Thema Abendmahl}
+	\begin{tabularx}{0.9\textwidth}{ L{0.22\linewidth} | L{0.2\linewidth} | X }%
+		\hline
+		\textbf{Suchmaschine} & \textbf{Precision} & \textbf{Recall} \\ \hline \hline
+		Umgesetzte Suche: & 0.61 & \textbf{0.8}\\
+		BibleGateway: & 0.71  & \textbf{0.8}\\
+		Android App: & \textbf{0.83} & \textbf{0.8}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
 Verglichen mit der umgesetzten Suche, fallen folgende Unterschiede auf:
 \begin{itemize}[noitemsep]
 	\item Es werden lediglich Verse gefunden, die alle Suchbegriffe beinhalten.
 	\item Die Precision bei beiden externen Suchmaschinen ist deutlich besser, als bei der umgesetzten Suche.
-		Dies ist so, weil die umgesetzte Suche auch Verse anzeigt, die nicht vollständig zutreffen. Doch durch das unterstütze Ranking kann das Ergebniss trotzdem sinnvoll gelesen werden.
+	Dies ist so, weil die umgesetzte Suche auch Verse anzeigt, die nicht vollständig zutreffen. Doch durch das unterstütze Ranking kann das Ergebniss trotzdem sinnvoll gelesen werden.
 	\item Das \gls{glos:documentLabel} ist auf einen Vers beschränkt. Sätze die sich über mehrere Verse erstrecken und beide Suchbegriffe beinhalten werden nichts gefunden (z.B. 1 Kor 11,23-24).
 	Gemäss der Definition des Queries, sollte jene Stellen ebenfalls zu den relevanten Dokumenten gehören.
 	\item Der weitere Kontext der Nachbarsversen wird bei beiden externen Suchmaschinen ebenfalls ignoriert, was bei der umgesetzten Suchmaschine den Vorteil bringt, dass dies beim Ranking berücksichtigt wird.
 	Zudem erscheinen jene Verse die nur im Nachbar die Begriffe beinhalten, trotzdem am Ende der Resultat Liste, gleichzeitig werden so mehrere Ergebnisse gefunden, durch die die Precision verschlechtert wird.
 \end{itemize}
 
+
+% **********************************************************************************
 % **********************************************************************************
 
-\subsection{Suche nach dem Namen von Abrahams Sohn}
+\newpage
+\section{Suche nach dem Namen von Abrahams Sohn}
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Suche: Name von Abrahams Sohn}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wie hiess der Sohn vom Abraham?}\\
+		Anfrage-Typ: & \textit{Fakten orientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will den Namen von Abrahams Sohn wissen.\\
+		Query: & \textit{sohn AND abraham} \\
+		Erwartung: &Vers und Stellenangabe:
+				\begin{itemize}[noitemsep]
+					\item "`Dies ist das Geschlecht Isaaks, des Sohnes Abrahams: Abraham zeugte Isaak."' - \textit{1 Mo (Gen) 25,19 \gls{lutLabel}}
+					\item Weitere Stellen in denen erwähnt wird, dass der Sohn von Abraham Isaak hiess...
+				\end{itemize}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+
+\subsection{Mit der umgesetzten Suchmaschine}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/4-comparison/search_result_abraham.png}
+	\caption{Resultate der Suche nach dem Namen von Abrahams Sohn}
+\end{figure}
+
+Da hier relativ viele Ergebnisse gefunden werden (71 \glspl{glos:documentLabel}), wird hier eine aus dem Web bekannte Variation der Precision verwendet; die \textit{Precision at K}. Dabei werden nur die ersten K Einträge bewertet. Dies wird oft bei Suchmaschinen angewendet, da der Nutzer meist nur an den ersten Einträgen interessiert ist.
+Für die vorliegenden Suchen wird $k = 10$ gesetzt.
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	\captionabove{Suche nach dem Namen von Abrahams Sohn: Precision und Recall}
+	\begin{tabularx}{0.9\textwidth}{ L{0.22\linewidth} | L{0.1\linewidth} | X }%
+		\hline
+		& Anzahl & Erklärung \\ \hline \hline
+		Relevant: & 1 & Es wird eine Information gesucht, die mehrmals bestätigt werden kann.\\
+		Relevant \& gefunden: & 5 & \\
+		Fehler: & 5 & \\
+		Total Ergebnisse: & 10 & \\
+		\hline
+		\textbf{Precision:} & \textbf{0.5} & $= \frac{5}{10}$ \\
+		\textbf{Recall:} & \textbf{5} & $= \frac{5}{1} \rightarrow$ 100\% der Resultate wurde gefunden\\
+		\hline\hline
+	\end{tabularx}
+\end{table}
+
+Diese Suche ist schwierig zu bewerten, da nur eine Information gesucht ist. Trotzdem können mit diesen Werten verschiedene Suchmaschinen miteinander verglichen werden.
+
+% **********************************************************************************
+
+\subsection{Mit der externen Suchmaschine}
 Das Resultat umfasst 28 \glspl{glos:documentLabel} in der abgebildeten Reihenfolge der Android App.
 Die Top 10 werden hier aufgelistet.
+
+Die BibleGateway Suchmaschine wird für diese Anfrage nicht ausgewertet, da ohne Ranking keine Top 10 definiert werden können. Eine Analyse aller Treffer (ebenfalls 28 \glspl{glos:documentLabel}), könnte anschliessen doch nicht mit den anderen verglichen werden.
+
 \begin{table}[H]
 	\centering
 	\small\renewcommand{\arraystretch}{1.4}
@@ -357,15 +327,31 @@ Die Top 10 werden hier aufgelistet.
 		Fehler: & 3 & \\
 		Total Ergebnisse: & 10 & \\
 		\hline
-		\textbf{Recall:} & \textbf{7} & $= \frac{7}{1} \rightarrow$ 100\% der Resultate wurde gefunden\\
 		\textbf{Precision:} & \textbf{0.7} & $= \frac{7}{10}$ \\
+		\textbf{Recall:} & \textbf{7} & $= \frac{7}{1} \rightarrow$ 100\% der Resultate wurde gefunden\\
 		\hline\hline
 	\end{tabularx}
 \end{table}
 
-\subsubsection{Vergleich der Suchmaschinen}
+\subsection{Vergleich der Suchmaschinen}
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	\captionabove{Fazit der Suche nach dem Namen von Abrahams Sohn}
+	\begin{tabularx}{0.9\textwidth}{ L{0.22\linewidth} | L{0.2\linewidth} | X }%
+		\hline
+		\textbf{Suchmaschine} & \textbf{Precision} & \textbf{Recall} \\ \hline \hline
+		Umgesetzte Suche: & 0.5 & 5\\
+		BibleGateway: & - & -\\
+		Android App: & \textbf{0.7} & \textbf{7}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
 Verglichen mit der umgesetzten Suchmaschine, fallen folgende Unterschiede auf:
 \begin{itemize}[noitemsep]
+	\item Die Suche auf der Android App schneidet bei dieser Anfrage am Besten ab.
 	\item Die Precision bei der externen Suchmaschine ist höher, als bei der umgesetzten Suchmaschine. \todo{wieso?}
 	\item Auch bei dieser externen Suchmaschine können nur Verse und nicht ganze Sätze gefunden werden.
 	\item Der weitere Kontext der Nachbarsversen wird ebenfalls ignoriert.
@@ -374,12 +360,63 @@ Verglichen mit der umgesetzten Suchmaschine, fallen folgende Unterschiede auf:
 
 
 % **********************************************************************************
+% **********************************************************************************
 
-\subsection{Suche nach dem Vers Joh 3,16}
+\newpage
+\section{Suche nach dem Vers Joh 3,16}
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	%
+	\captionabove{Suche: "`Denn so sehr hat Gott die Welt geliebt, ..."'}
+	%
+	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
+		\hline
+		Frage: & \textit{Wie heisst der Vers ähnlich: "`Denn so fest hat Gott die Welt geliebt, dass..."'}. Wo steht er?\\
+		Anfrage-Typ: & \textit{Vers orientierte Anfrage}\\
+		Beschreibung: & Der Nutzer will den genauen Vers inkl. Stellenangabe sehen.\\
+		Query: & \textit{denn so fest hat gott die welt geliebt}\\
+		Erwartung: & Vers und Stellenangabe:
+		"`Also hat Gott die Welt geliebt, daß er seinen eingeborenen Sohn gab, auf daß alle, die an ihn glauben, nicht verloren werden, sondern das ewige Leben haben."' - \textit{Joh 3,16 \gls{lutLabel}}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+
+\subsection{Mit der umgesetzten Suchmaschine}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/4-comparison/search_result_john3-16.png}
+	\caption{Resultate der Suche nach Joh 3,16}
+\end{figure}
+
+Für diese Suche macht es wenig Sinn die Precision und den Recall zu berechnen, da es nur genau ein relevantes \gls{glos:documentLabel} gibt, dass gefunden werden kann oder nicht.
+Zusätzlich sollte aber die Position des Ergebnisses verglichen werden.
+Die Anzahl der Ergebnisse sagt bei dieser Liste mit Ranking nicht viel aus und wird darum ignoriert.
+
+\begin{table}[H]
+	\centering
+	\small\renewcommand{\arraystretch}{1.4}
+	\rowcolors{1}{tablerowcolor}{tablebodycolor}
+	\captionabove{Suche nach dem bekannten Vers Joh 3,16}
+	\begin{tabularx}{0.6\textwidth}{ L{0.4\linewidth} | X }%
+		\hline
+		Vers gefunden & Ja\\
+		Position des Resultates & 1\\
+		\textit{Total Ergebnisse} & \textit{6'304}\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+
+\subsection{Mit den externen Suchen}
 Bei der Query "`denn so fest hat gott die welt geliebt"' finden beide externe Suchmaschinen (der BibleGateway und die Android App) keine Ergebnisse.
 Der BibleGateway unterstützt eine Suche nach "`ANY word"', was aber sehr viele Resultate zur Folge hat (16'890 Resultate), durch das fehlende Ranking ist das Ergebnis wertlos.
 
-\subsubsection{Vergleich der Suchmaschinen}
+\subsection{Vergleich der Suchmaschinen}
 Verglichen mit der umgesetzten Suchmaschinen, fallen folgende Kriterien auf:
 \begin{itemize}[noitemsep]
 	\item BibleGateway unterstützt anscheinend kein \textit{Stop Words Filtering}.
