@@ -1,5 +1,5 @@
-\chapter{Umsetzung der Suche}
-In diesem Kapitel wird die Umsetzung der Suche beschrieben.
+\chapter{Umsetzung der Suchmaschine}
+In diesem Kapitel wird die Umsetzung der Suchmaschine beschrieben.
 
 \todo{dieser Text ist wiederholt - notwendig?}
 Die Suche soll mit Apache Lucene umgesetzt werden. Für die Bedienung genügt in erster Linie ein \gls{cliLabel}.
@@ -109,8 +109,8 @@ $[Buch Abk.], [Kapitel],[Vers[-(Vers + Verslänge)]]$
 Um den Kontext besser zu berücksichtigen, müssten jeweils mehrere Verse pro \gls{glos:documentLabel} zusammengefügt werden.
 Da aber der effektive Kontext nicht einfach gruppiert werden kann, muss man fix eine Anzahl Verse zusammenfügen.
 Dieser Ansatz ist naiv und würde zu falschen Ergebnissen führen, da sie abhängig der gewählten Gruppengrösse sporadische "`Pseudo-Kontexte"' kreieren würden.
-Dies hätte eine nicht abschätzbare und nicht vertrauenswürdige Suche zur Folge.
-Dem Nutzer würde dies keinen Gewinn bringen, sondern eher Verwirrung, was die Suche unbrauchbar macht.
+Dies hätte eine nicht abschätzbare und nicht vertrauenswürdige Suchmaschine zur Folge.
+Dem Nutzer würde dies keinen Gewinn bringen, sondern eher Verwirrung, was die Suchmaschine unbrauchbar macht.
 
 \vspace{0.5em}
 \textit{Verse mit den Nachbarversen ergänzen und zu einem Dokument hinzufügen}
@@ -300,7 +300,7 @@ Für die Suche kann die vollständige Lucene Query Syntax verwendet werden. Mög
 Für den Suchbegriff müssen die gleichen Optimierungen wie für die \gls{glos:indexingLabel} (\secref{sec:indexing}) angewendet werden, so dass eine einheitliche Ausgangslage besteht.
 
 \section{Features}
-Obwohl die Suche nur via \gls{cliLabel} bedient werden kann, sollen trotzdem grundlegende Features zur Verfügung gestellt werden:
+Obwohl die Suchmaschine nur via \gls{cliLabel} bedient werden kann, sollen trotzdem grundlegende Features zur Verfügung gestellt werden:
 \begin{itemize}[noitemsep]
 	\item \textit{Paging}:
 	Die Suchresultate sollen gemäss dem \gls{glos:rankingLabel} aufgelistet werden. Es soll das Total der Ergebnissen angezeigt werden. Anschliessend sollen jeweils Seiten mit je 10 Ergebnissen folgen, durch die dann navigiert werden kann.
@@ -320,7 +320,7 @@ Obwohl die Suche nur via \gls{cliLabel} bedient werden kann, sollen trotzdem gru
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/3-realization/searching_screenshot.png}
-	\caption{Screenshot der Suche inkl. Ergebnisse}
+	\caption{Screenshot der Suchmaschine inkl. Ergebnisse}
 \end{figure}
 
 %\section{Index Analyse mit Luke}
