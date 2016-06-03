@@ -1,12 +1,12 @@
 \chapter{Bewertung und Vergleich zu anderen Suchmaschinen}
  \label{sec:compareSearches}
 Um einen Vergleich aufzustellen, werden Beispielanfragen mit der umgesetzten Suchmaschine durchgeführt und analysiert.
-Anschliessend werden die Beispielanfragen auf externen Suchmaschinen durchgeführt.
+Anschliessend werden die selben Beispielanfragen auf externen Suchmaschinen durchgeführt, so dass die Ergebnisse miteinander verglichen werden können.
 
 \section{Allgemeine Informationen zum Vergleich}
 Für jede Suche wird mindestens ein Teil der Resultat-Menge aufgelistet.
 
-Da die umgesetzte Suche vers- oder genauer satzbasiert umgesetzt worden ist, müssen die Ergebnisse entsprechend manuell zu den vorgegebenen relevanten Bibelstellen gruppiert werden.
+Da die umgesetzte Suche vers- respektiv satzbasiert umgesetzt worden ist, müssen die Ergebnisse entsprechend manuell zu den vorgegebenen relevanten Bibelstellen gruppiert werden.
 So kann schlussendlich ein sinnvoller Wert für die Precision und den Recall berechnet werden.
 Ersichtlich wird dies z.B. in der Auswertung im \cref{sec:index_abendmahl}.
 
@@ -14,7 +14,7 @@ Ersichtlich wird dies z.B. in der Auswertung im \cref{sec:index_abendmahl}.
 \subsection{Die externen Suchmaschinen}
 Es sind drei externe Suchmaschinen bekannt: der BibleServer.com\footcite{BibleServer_Die_Bibel_fr_alle_2016-05-30}, der BibleGateway.com\footcite{BibleGateway_2016-05-30} und die Android App \textit{Bible} von Life.Church \footcite{Bible_Android_Apps_on_Google_Play_2016-05-30}.
 
-Während der Nutzung von BibleServer und BibleGateway wurde bekannt, dass beide Suchmaschinen die exakt selben Resultate liefern.
+Während der Nutzung von BibleServer und BibleGateway wurde bekannt, dass beide Suchmaschinen exakt die selben Resultate liefern.
 Auf Grund dessen, wird folgend die BibleServer ignoriert. Die gleichen Kennzahlen treffen aber auch auf die BibleServer-Suchmaschine zu.
 Nur die Android App unterstützt ein Ranking. Bei den anderen Suchmaschinen werden die Resultate gemäss der traditionellen Reihenfolge der Bibel sortiert dargestellt.
 
@@ -38,7 +38,7 @@ Als Grundlage wird weiterhin überall die \gls{lutLabel} Übersetzung verwendet.
 	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
 		\hline
 		Fragestellung: & \textit{Wo wurde das Abendmahl eingeführt?} \textit{Wo wird es erwähnt?}\\
-		Anfrage-Typ: & \textit{Vers orientierte Anfrage}\\
+		Anfrage-Typ: & \textit{Kontextorientierte Anfrage}\\
 		Beschreibung: & Der Nutzer will wissen, wo das Abendmahl erwähnt wird.\\
 		Query: & \textit{brot AND leib}\\
 		Erwartung: & 
@@ -193,6 +193,7 @@ Daraus folgt für die Precision und den Recall die Werte in \cref{tab:index_aben
 	\end{tabularx}
 \end{table}
 
+\newpage
 \subsection{Vergleich der Suchmaschinen}
 \begin{table}[H]
 	\centering
@@ -211,13 +212,19 @@ Daraus folgt für die Precision und den Recall die Werte in \cref{tab:index_aben
 
 Verglichen mit der umgesetzten Suche, fallen folgende Unterschiede auf:
 \begin{itemize}[noitemsep]
-	\item Es werden lediglich Verse gefunden, die alle Suchbegriffe beinhalten.
-	\item Die Precision bei beiden externen Suchmaschinen ist deutlich besser, als bei der umgesetzten Suche.
-	Dies ist so, weil die umgesetzte Suche auch Verse anzeigt, die nicht vollständig zutreffen. Doch durch das unterstütze Ranking kann das Ergebniss trotzdem sinnvoll gelesen werden.
-	\item Das \gls{glos:documentLabel} ist auf einen Vers beschränkt. Sätze die sich über mehrere Verse erstrecken und beide Suchbegriffe beinhalten werden nichts gefunden (z.B. 1 Kor 11,23-24).
-	Gemäss der Definition des Queries, sollte jene Stellen ebenfalls zu den relevanten Dokumenten gehören.
-	\item Der weitere Kontext der Nachbarsversen wird bei beiden externen Suchmaschinen ebenfalls ignoriert, was bei der umgesetzten Suchmaschine den Vorteil bringt, dass dies beim Ranking berücksichtigt wird.
-	Zudem erscheinen jene Verse die nur im Nachbar die Begriffe beinhalten, trotzdem am Ende der Resultat Liste, gleichzeitig werden so mehrere Ergebnisse gefunden, durch die die Precision verschlechtert wird.
+	\item Die externen Suchmaschinen finden ausschliesslich Verse, die alle Suchbegriffe beinhalten.
+	Dieser Nachteil den die externen Suchmaschinen verstärkt sich, wenn man nach vielen Worten gleichzeitig sucht, denn dann werden keine Resultate mehr gefunden. Das gesamte Dokument ist immer nur ein Vers, also nur wenige Worte.
+	
+	\item Die Precision bei beiden externen Suchmaschinen ist besser, als bei der umgesetzten Suche.
+	Dies ist so, weil die umgesetzte Suche auch Verse anzeigt, die nicht vollständig zutreffen und so mehrere Ergebnisse liefert. Auf Grund des Rankings ist das aber nicht weiter schlimm, ausser dass es sich negativ auf die Precision auswirkt.
+	
+	\item Das \gls{glos:documentLabel} der externen Suchmaschinen ist auf einen Vers beschränkt. Sätze die sich über mehrere Verse erstrecken und beide Suchbegriffe beinhalten werden nicht gefunden (z.B. 1 Kor 11,23-24).
+	Gemäss der Anfrage, sollte jene Stellen allerdings ebenfalls zu den relevanten Dokumenten gehören.
+	Dies ist bei der umgesetzten Suche ein klarer Vorteil.
+	
+	\item Der weitere Kontext der Nachbarsversen wird bei beiden externen Suchmaschinen ebenfalls ignoriert, was bei der umgesetzten Suchmaschine den Vorteil bringt, dass dieser Kontext das Ranking berücksichtigt.
+	Durch den Kontext, werden aber auch mehrere Resultate gefunden die im Hauptvers die Suchwörter gar nicht beinhalten, weil sie nur im Kontext vorkommen. Auch diese wirken sich negativ auf die Precision aus, weil sich so die Menge an Resultate vermehrt.
+	
 \end{itemize}
 
 
@@ -236,7 +243,7 @@ Verglichen mit der umgesetzten Suche, fallen folgende Unterschiede auf:
 	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
 		\hline
 		Frage: & \textit{Wie hiess der Sohn vom Abraham?}\\
-		Anfrage-Typ: & \textit{Fakten orientierte Anfrage}\\
+		Anfrage-Typ: & \textit{Faktenorientierte Anfrage}\\
 		Beschreibung: & Der Nutzer will den Namen von Abrahams Sohn wissen.\\
 		Query: & \textit{sohn AND abraham} \\
 		Erwartung: &Vers und Stellenangabe:
@@ -257,8 +264,8 @@ Verglichen mit der umgesetzten Suche, fallen folgende Unterschiede auf:
 	\caption{Resultate der Suche nach dem Namen von Abrahams Sohn}
 \end{figure}
 
-Da hier relativ viele Ergebnisse gefunden werden (71 \glspl{glos:documentLabel}), wird hier eine aus dem Web bekannte Variation der Precision verwendet; die \textit{Precision at K}. Dabei werden nur die ersten K Einträge bewertet. Dies wird oft bei Suchmaschinen angewendet, da der Nutzer meist nur an den ersten Einträgen interessiert ist.
-Für die vorliegenden Suchen wird $k = 10$ gesetzt.
+Da hier relativ viele Ergebnisse gefunden werden (71 \glspl{glos:documentLabel}), wird hier eine aus dem Web bekannte Variation der Precision verwendet; die \textit{Precision at K}\footcite{Information_retrieval_Wikipedia_the_free_encyclopedia_2016-05-11}. Dabei werden nur die ersten K Einträge bewertet. Dies wird oft bei Suchmaschinen angewendet, da der Nutzer meist nur an den ersten Einträgen interessiert ist.
+Für die vorliegende Auswertung wird $k = 10$ gesetzt.
 
 \begin{table}[H]
 	\centering
@@ -352,10 +359,13 @@ Die BibleGateway Suchmaschine wird für diese Anfrage nicht ausgewertet, da ohne
 Verglichen mit der umgesetzten Suchmaschine, fallen folgende Unterschiede auf:
 \begin{itemize}[noitemsep]
 	\item Die Suche auf der Android App schneidet bei dieser Anfrage am Besten ab.
-	\item Die Precision bei der externen Suchmaschine ist höher, als bei der umgesetzten Suchmaschine. \todo{wieso?}
-	\item Auch bei dieser externen Suchmaschine können nur Verse und nicht ganze Sätze gefunden werden.
+	
+	\item Die Precision bei der externen Suchmaschine ist höher als bei der umgesetzten Suchmaschine, dies kann nicht einfach erklärt werden. Jedes Resultat das angezeigt wird, macht bei beiden Suchen Sinn.
+	
+	\item Auch hier können bei den externen Suchmaschine nur Verse und nicht ganze Sätze gefunden werden.
+	
 	\item Der weitere Kontext der Nachbarsversen wird ebenfalls ignoriert.
-	Dies sollte aber nicht der Grund sein, warum die umgesetzte Suchmaschine eine tiefere Precision hat. (In der Resultatmenge hat es nur zwei Verse die Nachbarsversen sind, beide beinhalten alle Suchwörter).
+	Dies sollte aber nicht der Grund sein, warum die umgesetzte Suchmaschine eine tiefere Precision hat. (In der Resultatmenge hat es nur zwei aufeinanderfolgende Verse und beide beinhalten alle Suchbegriffe).
 \end{itemize}
 
 
@@ -375,7 +385,7 @@ Verglichen mit der umgesetzten Suchmaschine, fallen folgende Unterschiede auf:
 	\begin{tabularx}{0.9\textwidth}{ L{0.15\linewidth} | X  }%
 		\hline
 		Frage: & \textit{Wie heisst der Vers ähnlich: "`Denn so fest hat Gott die Welt geliebt, dass..."'}. Wo steht er?\\
-		Anfrage-Typ: & \textit{Vers orientierte Anfrage}\\
+		Anfrage-Typ: & \textit{Versorientierte Anfrage}\\
 		Beschreibung: & Der Nutzer will den genauen Vers inkl. Stellenangabe sehen.\\
 		Query: & \textit{denn so fest hat gott die welt geliebt}\\
 		Erwartung: & Vers und Stellenangabe:
@@ -419,7 +429,33 @@ Der BibleGateway unterstützt eine Suche nach "`ANY word"', was aber sehr viele 
 \subsection{Vergleich der Suchmaschinen}
 Verglichen mit der umgesetzten Suchmaschinen, fallen folgende Kriterien auf:
 \begin{itemize}[noitemsep]
+	\item Mit den externen Suchmaschinen kann der gesuchte Vers nicht gefunden werden, da im Suchbegriff Wörter vorkommen die im Vers nicht vorhanden sind.
+	Daraus folgt, dass die umgesetzte Suche besonders stark für solche "`unscharfe"' Suchanfragen geeignet ist.
+	
 	\item BibleGateway unterstützt anscheinend kein \textit{Stop Words Filtering}.
+	
 	\item Ein Ranking ist ein notwendiges Features, wenn es viele zutreffende Dokumente gibt. Ansonsten ist die Suchmaschine in diesen Fällen vollkommen wertlos.
 \end{itemize}
+
+\newpage
+\section{Fazit des Vergleiches}
+Trotzdem dass die Anzahl \glspl{glos:documentLabel} im Gegensatz zu einer Websuche sehr überschaubar ist, ist es aufwändig Suchmaschinen zu bewerten und zu vergleichen, besonders die Definition der Treffer setzt eine genaue Auseinandersetzung der Thematik voraus.
+
+Nur schon ein anderes Wort im Suchbegriff, kann sich erheblich auf die Qualität der Ergebnisse auswirken. Es wäre also einfach möglich, die Bewertung bewusst über gewählten Anfragen zu manipulieren.
+
+Folgende Aussagen konnten aus der Auswertung der durchgeführten Suchanfragen abgeleitet werden:
+\begin{itemize}[noitemsep]
+	\item Suche mit und ohne Ranking lassen sich nur erschwert vergleichen. Allgemein wirkt sich ein gutes Ranking sehr stark auf die Qualität der Suche aus. Eine Suche ohne Ranking kann nur eingeschränkt verwendet werden.
+	
+	\item Die Precision muss mit Rücksicht betrachtet werden. Bei einem Top-Ranking, darf sich die Suchmaschinen-Qualität nicht auf Grund der Anzahl Resultate verschlechtern.
+	
+	\item Alle Anfragen konnten grundsätzlich von allen Suchmaschinen beantwortet werden.
+	
+	\item Die umgesetzte Suche ist den anderen Suchen vor allem in der versorientierten Anfrage stark überlegen.
+	
+	\item Bezüglich der Laufzeit, waren alle Suche sehr schnell.
+
+\end{itemize}
+
+
 
