@@ -210,20 +210,21 @@ Daraus folgt für die Precision und den Recall die Werte in \cref{tab:index_aben
 	\end{tabularx}
 \end{table}
 
-Verglichen mit der umgesetzten Suche, fallen folgende Unterschiede auf:
+Beim Vergleich der Suchmaschinen können folgende Beobachtungen festgestellt werden:
 \begin{itemize}[noitemsep]
-	\item Die externen Suchmaschinen finden ausschliesslich Verse, die alle Suchbegriffe beinhalten.
-	Dieser Nachteil den die externen Suchmaschinen verstärkt sich, wenn man nach vielen Worten gleichzeitig sucht, denn dann werden keine Resultate mehr gefunden. Das gesamte Dokument ist immer nur ein Vers, also nur wenige Worte.
+	\item Die externen Suchmaschinen finden ausschliesslich Verse die alle Suchbegriffe beinhalten.
+	Dieser Nachteil der externen Suchmaschinen verstärkt sich, wenn man nach vielen Worten gleichzeitig sucht; da das gesamte \gls{glos:documentLabel} immer nur einen Vers beinhaltet und somit eher wenig Text bietet, werden rasch keine Resultate mehr gefunden.
 	
-	\item Die Precision bei beiden externen Suchmaschinen ist besser, als bei der umgesetzten Suche.
+	\item Die Precision bei beiden externen Suchmaschinen ist besser als bei der umgesetzten Suche.
 	Dies ist so, weil die umgesetzte Suche auch Verse anzeigt, die nicht vollständig zutreffen und so mehrere Ergebnisse liefert. Auf Grund des Rankings ist das aber nicht weiter schlimm, ausser dass es sich negativ auf die Precision auswirkt.
 	
 	\item Das \gls{glos:documentLabel} der externen Suchmaschinen ist auf einen Vers beschränkt. Sätze die sich über mehrere Verse erstrecken und beide Suchbegriffe beinhalten werden nicht gefunden (z.B. 1 Kor 11,23-24).
 	Gemäss der Anfrage, sollte jene Stellen allerdings ebenfalls zu den relevanten Dokumenten gehören.
 	Dies ist bei der umgesetzten Suche ein klarer Vorteil.
 	
-	\item Der weitere Kontext der Nachbarsversen wird bei beiden externen Suchmaschinen ebenfalls ignoriert, was bei der umgesetzten Suchmaschine den Vorteil bringt, dass dieser Kontext das Ranking berücksichtigt.
-	Durch den Kontext, werden aber auch mehrere Resultate gefunden die im Hauptvers die Suchwörter gar nicht beinhalten, weil sie nur im Kontext vorkommen. Auch diese wirken sich negativ auf die Precision aus, weil sich so die Menge an Resultate vermehrt.
+	\item Der Kontext der Nachbarsversen wird bei beiden externen Suchmaschinen ebenfalls ignoriert, was bei der umgesetzten Suchmaschine den Vorteil bringt, dass dieser Kontext das Ranking beeinflusst.
+	Durch Berücksichtigung des Kontextes, werden aber auch mehrere Resultate gefunden die im Hauptvers die Suchwörter gar nicht beinhalten, sondern nur im Kontext.
+	Auch diese wirken sich negativ auf die Precision aus, weil dadurch die Resultat Menge vergrössert wird.
 	
 \end{itemize}
 
@@ -356,7 +357,7 @@ Die BibleGateway Suchmaschine wird für diese Anfrage nicht ausgewertet, da ohne
 	\end{tabularx}
 \end{table}
 
-Verglichen mit der umgesetzten Suchmaschine, fallen folgende Unterschiede auf:
+Beim Vergleich der Suchmaschinen können folgende Beobachtungen festgestellt werden:
 \begin{itemize}[noitemsep]
 	\item Die Suche auf der Android App schneidet bei dieser Anfrage am Besten ab.
 	
@@ -427,14 +428,15 @@ Bei der Query "`denn so fest hat gott die welt geliebt"' finden beide externe Su
 Der BibleGateway unterstützt eine Suche nach "`ANY word"', was aber sehr viele Resultate zur Folge hat (16'890 Resultate), durch das fehlende Ranking ist das Ergebnis wertlos.
 
 \subsection{Vergleich der Suchmaschinen}
-Verglichen mit der umgesetzten Suchmaschinen, fallen folgende Kriterien auf:
+Beim Vergleich der Suchmaschinen können folgende Beobachtungen festgestellt werden:
 \begin{itemize}[noitemsep]
 	\item Mit den externen Suchmaschinen kann der gesuchte Vers nicht gefunden werden, da im Suchbegriff Wörter vorkommen die im Vers nicht vorhanden sind.
 	Daraus folgt, dass die umgesetzte Suche besonders stark für solche "`unscharfe"' Suchanfragen geeignet ist.
 	
 	\item BibleGateway unterstützt anscheinend kein \textit{Stop Words Filtering}.
 	
-	\item Ein Ranking ist ein notwendiges Features, wenn es viele zutreffende Dokumente gibt. Ansonsten ist die Suchmaschine in diesen Fällen vollkommen wertlos.
+	\item Ein Ranking ist ein notwendiges Features, sobald es viele zutreffende Dokumente gibt.
+	Ansonsten sind die Resultate solcher Suchmaschine in diesen Fällen vollkommen wertlos.
 \end{itemize}
 
 \newpage
@@ -447,13 +449,16 @@ Folgende Aussagen konnten aus der Auswertung der durchgeführten Suchanfragen ab
 \begin{itemize}[noitemsep]
 	\item Suche mit und ohne Ranking lassen sich nur erschwert vergleichen. Allgemein wirkt sich ein gutes Ranking sehr stark auf die Qualität der Suche aus. Eine Suche ohne Ranking kann nur eingeschränkt verwendet werden.
 	
-	\item Die Precision muss mit Rücksicht betrachtet werden. Bei einem Top-Ranking, darf sich die Suchmaschinen-Qualität nicht auf Grund der Anzahl Resultate verschlechtern.
+	\item Die Precision darf nur mit Vorbehalt verwendet werden.
+	Bei einem Top-Ranking, darf sich die Suchmaschinen-Qualität nicht aufgrund der Anzahl Resultate verschlechtern.
 	
 	\item Alle Anfragen konnten grundsätzlich von allen Suchmaschinen beantwortet werden.
+
+	\item Bezüglich der Laufzeit, waren alle Suchmaschinen sehr schnell. (Die Datenmenge ist nur Text und auch trotzdem dass die Bibel eines der dicksten Bücher ist, sind die Anzahl Verse für eine solche Suchmaschine gut verwaltbar.)
 	
-	\item Die umgesetzte Suche ist den anderen Suchen vor allem in der versorientierten Anfrage stark überlegen.
+	\item Die umgesetzte Suche ist den anderen Suchen hauptsächlich in der versorientierten Anfrage stark überlegen.
 	
-	\item Bezüglich der Laufzeit, waren alle Suche sehr schnell.
+	\item Trotz schlechterer Precision bei der umgesetzten Suchmaschine, kann sie gut für fakten- und kontextorientierte Anfrage verwendet werden.
 
 \end{itemize}
 
