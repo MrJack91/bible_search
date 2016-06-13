@@ -300,9 +300,9 @@ Nach indexierte Werten kann gesucht werden. Persistierte Werte stehen für jeden
 Nach allen indexierten Feldern kann anschliessend gesucht werden. Persistierte Felder können ausgelesen werden und so kontextspezifische Informationen wie Referenzen und Stellenangaben beinhalten.
 
 Im Index soll lediglich der Vers-Text (\textit{content}) indexiert werden.
-Dazu müssen folgende weitere Referenzinformationen mit abgelegt werden: \textit{id}, \textit{book}, \textit{chapter}, \textit{verse}.
+Dazu müssen folgende weitere Referenzinformationen mit abgelegt werden: \textit{id}, \textit{book}, \textit{chapter}, \textit{verse}, \textit{verseLength}.
 
-Zusätzlich für den Versuch der Kontext Optimierung (siehe \secref{sec:contextOptimaze}) sollen die Nachbarverse ebenfalls indexiert werden. Sie werden ins Feld \textit{context} gespeichert und ebenfalls indexiert.
+Zusätzlich für den Versuch der Kontext Optimierung (siehe \secref{sec:contextOptimaze}) sollen die Nachbarverse ebenfalls indexiert werden. Sie werden ins Feld \textit{context} gespeichert.
 
 
 \section{Suche}
@@ -311,7 +311,7 @@ Für die Suche kann die vollständige Lucene Query Syntax verwendet werden. Mög
 
 Für den Suchbegriff müssen die gleichen Optimierungen wie für die \gls{glos:indexingLabel} (\secref{sec:indexing}) angewendet werden, so dass eine einheitliche Ausgangslage besteht.
 
-\section{Features}
+\subsection{Features}
 Obwohl die Suchmaschine nur via \gls{cliLabel} bedient werden kann, sollen trotzdem grundlegende Features zur Verfügung gestellt werden:
 \begin{itemize}[noitemsep]
 	\item \textit{Paging}:
