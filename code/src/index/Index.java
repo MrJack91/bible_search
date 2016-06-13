@@ -238,7 +238,7 @@ public class Index {
                 doc.add(contentTextField);
 
                 /*
-                if (fullVerseLength == 9) {
+                if (fullVerseLength == 18) {
                     System.out.println(fullText + "\n");
                 }
                 */

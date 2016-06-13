@@ -11,7 +11,7 @@ Für jedes Suchresultat soll der Text und die genaue Bibelstelle in folgendem Fo
 Die Resultate sollen nach einem sinnvollen \gls{glos:rankingLabel} sortiert werden.
 Zugunsten einer raschen Erkennbarkeit ist eine farbliche Hervorhebung (Highlighting) der Suchbegriffe in der Resultat-Liste wünschenswert.
 
-\textbf{Beispiel der Resultat-Liste mit Ergebnissen:}
+\textbf{Beispiel der Resultat-Liste mit Ergebnissen (in originaler Luther Übersetzung):}
 \begin{itemize}[noitemsep]
 	\item Da wurden sie alle gutes Muts und nahmen auch Speise. - Apg 27,36
 	\item Was setzt sich dein Mut gegen Gott, dass du solche Reden aus deinem Munde lässest? - Hiob 15,13
@@ -24,8 +24,8 @@ Der Text von der Luther Bibel muss in \glspl{glos:documentLabel} eingeteilt und 
 Die Wahl der Dokumentgrösse hat einen wesentlichen Einfluss auf die Genauigkeit der Resultate.
 
 Zum Beispiel lässt sich die Wichtigkeit der Suchbegriffe im jeweiligen Kontext über den \gls{glos:wordDistanceLabel} gewichten.
-Desto grösser das \gls{glos:documentLabel} gewählt ist, desto genauer kann das \gls{glos:rankingLabel} berechnet werden.
-Gleichzeitig werden Metadaten grundsätzlich pro \gls{glos:documentLabel} gespeichert, also desto kleiner ein \gls{glos:documentLabel} gewählt wird, desto genauer kann die Stelle des Auftauchens angezeigt werden.
+Je grösser das \gls{glos:documentLabel} gewählt ist, desto genauer kann das \gls{glos:rankingLabel} berechnet werden.
+Gleichzeitig werden Metadaten grundsätzlich pro \gls{glos:documentLabel} gespeichert, also je kleiner ein \gls{glos:documentLabel} gewählt wird, desto genauer kann die Stelle des Auftauchens angezeigt werden.
 
 Diese zwei Anforderungen zeigen einen gewissen Zielkonflikt auf, der folglich optimiert werden muss.
 
@@ -42,7 +42,7 @@ Für die Aufteilung der \glspl{glos:documentLabel} gibt es verschiedene Variante
 \end{itemize}
 
 Verständlicherweise ergeben sich für jeden Ansatz Vor- und Nachteile.
-Im Folgenden wird darauf für jede Möglichkeit eingegangen.
+Im Folgenden wird darauf auf jede Möglichkeit eingegangen.
 
 \subsubsection{Möglichkeit: Ganzer Text als ein Dokument}
 Wird der ganze Text zu einem \gls{glos:documentLabel} hinzugefügt, kann der Kontext mit dem \gls{glos:wordDistanceLabel} am besten rekonstruiert werden.
@@ -60,7 +60,7 @@ Da die Bücher relativ gross sind und nicht unbedingt auf eine Thema beschränkt
 Ganz grob könnten so allenfalls die Hauptthemen der Bücher überprüft werden.
 
 \subsubsection{Möglichkeit: Pro Kapitel ein Dokument}
-Selbst eine Aufteilung nach Kapitel ist zu grob, da die Kapitel keine einheitliche Länge habe und auch hier ist ein Kapitel oft nicht auf ein Thema beschränkt.
+Selbst eine Aufteilung nach Kapiteln ist zu grob, da die Kapitel keine einheitliche Länge habe und auch hier ist ein Kapitel oft nicht auf ein Thema beschränkt.
 Ein Kapitel kann mehrere Themen behandeln, so wie aber auch Themen über mehrere Kapitel erläutert werden können.
 
 Wenn man sich die Anwendungsfälle der Beispielanfragen (im \secref{sec:compareSearches}) vor Augen führt, lässt sich ebenfalls daraus schliessen, dass eine kleinere und übersichtlichere Einheit benötigt wird.
@@ -76,7 +76,7 @@ Es treten allerdings zwei Probleme auf:
 \end{itemize}
 
 \subsubsection{Gewinner für die Definition der Dokumentgrösse}
-Trotz den erwähnten Nachteilen eignet sich für die Beantwortung der Beispielanfragen die Dokumentengrösse eines Verses am Besten.
+Trotz den erwähnten Nachteilen eignet sich für die Beantwortung der Beispielanfragen die Dokumentgrösse eines Verses am Besten.
 
 
 \subsection{Dokumentgrösse optimieren}
@@ -85,9 +85,9 @@ Um die zwei erwähnten Hauptprobleme der \textit{Satztrennung} und der \textit{K
 
 \subsubsection{Satztrennung Optimierung}
 Die unerwünschte Satztrennung lässt sich einfach beheben, indem weiterhin grundsätzlich Verse als eigenes \gls{glos:documentLabel} hinzugefügt werden.
-Allerdings gibt es die Ausnahme, dass wenn der Vers am Ende keinen abgeschlossenen Satz hat, der nächste Satz ebenfalls zum selben \gls{glos:documentLabel} hinzugefügt wird.
+Allerdings gibt es die Ausnahme, dass, wenn der Vers am Ende keinen abgeschlossenen Satz hat, der nächste Satz ebenfalls zum selben \gls{glos:documentLabel} hinzugefügt wird.
 
-Ob der Satz abgeschlossen ist, lässt sich am einfachsten überprüfen indem das letzte Zeichen mit folgenden erlaubten Satzendzeichen verglichen wird:
+Ob der Satz abgeschlossen ist, lässt sich am einfachsten überprüfen, indem das letzte Zeichen mit folgenden erlaubten Satzendzeichen verglichen wird:
 \begin{itemize}[noitemsep]
 	\item "`."' \textit{(Punkt)}
 	\item "`?"' \textit{(Fragezeichen)}
@@ -114,22 +114,22 @@ Dem Nutzer würde dies keinen Gewinn bringen, sondern eher Verwirrung, was die S
 \vspace{0.5em}
 \textit{Verse mit den Nachbarversen ergänzen und zu einem Dokument hinzufügen}
 \vspace{0.5em}\\
-Alternativ könnten zu jedem \gls{glos:documentLabel} die Nachbarversen (Vor- und Nachfolger) angehängt werden, so dass der Kontext genauer bewertet werden kann.
+Alternativ könnten zu jedem \gls{glos:documentLabel} die Nachbarverse (Vor- und Nachfolger) angehängt werden, so dass der Kontext genauer bewertet werden kann.
 Das Problem hier ist, dass Inhalte mehrmals in den Resultaten auftauchen werden, da der Kontext überschneidend ist. (Jeder Vers würde insgesamt dreimal im \gls{glos:indexLabel} vorkommen.)
-Hier die überflüssigen Ergebnisse herauszufiltern, stellt eine komplexe Aufgabe dar, die mit grossem Aufwand verbunden wäre.
+Hier die überflüssigen Ergebnisse herauszufiltern stellt eine komplexe Aufgabe dar, die mit grossem Aufwand verbunden wäre.
 
 \vspace{0.5em}
 \textit{Nachbarverse als eigenes Feld zum Index hinzufügen}
 \vspace{0.5em}\\
-Für diese Optimierung sollte nebst dem eigentlichen Vers in einem eigenen Feld der Vers mit den Nachbarsversen (Vorgänger und Nachfolger) hinzugefügt werden.
-Die Gefahr hier ist, dass die Gewichtung des Trefferverses, über das Vorhandensein bei den Nachbarn, die Nachbarn selbst zu stark gewichtet, so dass diese Nachbarversen oft auch als eigenes Resultat auftauchen, obwohl sie eigentlich gar nicht von Interesse wären. Darum müsste die Gewichtung des Zusatzfeldes mit den Nachbarn reduziert werden.
+Für diese Optimierung sollte nebst dem eigentlichen Vers in einem eigenen Feld der Vers mit den Nachbarversen (Vorgänger und Nachfolger) hinzugefügt werden.
+Die Gefahr hier ist, dass die Gewichtung des Trefferverses über das Vorhandensein bei den Nachbarn, die Nachbarn selbst zu stark gewichtet, so dass diese Nachbarverse oft auch als eigenes Resultat auftauchen, obwohl sie eigentlich gar nicht von Interesse wären. Darum müsste die Gewichtung des Zusatzfeldes mit den Nachbarn reduziert werden.
 
-Im Nachbarfeld sollen ausschliesslich die zwei Nachbarn vorkommen. Der Hauptvers selbst, darf nicht nochmals vorhanden sein, da dieser sonst das \gls{glos:scoringLabel} falsch beeinflussen würde.
+Im Nachbarfeld sollen ausschliesslich die zwei Nachbarn vorkommen. Der Hauptvers selbst darf nicht nochmals vorhanden sein, da dieser sonst das \gls{glos:scoringLabel} falsch beeinflussen würde.
 
 Das Zusammenfügen der Nachbarn in einem Feld scheint sinnvoll, da so ein grösserer Kontext erstellt wird und beide Teile gleichen Einfluss auf das \gls{glos:rankingLabel} haben sollen.
 
 Der genaue Effekt dieser Optimierung der Kontext-Erweiterung kann vorläufig nicht genau abgeschätzt werden.
-Daher lohnt es sich eine Implementation dieser Möglichkeit umzusetzen und die daraus folgenden Ergebnissen zu analysieren und zu vergleichen.
+Daher lohnt es sich, eine Implementation dieser Möglichkeit umzusetzen und die daraus folgenden Ergebnisse zu analysieren und zu vergleichen.
 
 
 \section{Indexierung}
@@ -138,9 +138,9 @@ Der \gls{glos:indexLabel} sollte auf Grund des eher kleinen Umfanges, der guten 
 Selbst wenn der gesamte \gls{glos:indexLabel} neu generiert werden muss, sollte dies nur eine geringe Zeit in Anspruch nehmen.
 Dies ist besonders für die Entwicklung, Tests und Optimierungen sehr angenehm.
 
-Viele Funktionen beim Aufbau des \glspl{glos:indexLabel}s sind abhängig von der vorliegenden Sprache in der die Daten abgelegt sind.
+Viele Funktionen beim Aufbau des \glspl{glos:indexLabel}s sind abhängig von der vorliegenden Sprache, in der die Daten abgelegt sind.
 Da der Text in deutscher Sprache vorliegt, muss dies berücksichtigt werden.
-Apache Lucene bietet dazu bereist die notwendigen Möglichkeiten, welche nur korrekt genutzt werden müssen.
+Apache Lucene bietet dazu bereits die notwendigen Möglichkeiten, welche nur korrekt genutzt werden müssen.
 
 Die \glspl{glos:documentLabel} werden gesammelt und vom \textit{Analyzer} bewertet. Für die deutsche Sprache kann der \textit{German Analyzer} genutzt werden.
 Dabei werden bereits grundlegende Verbesserungen vollzogen:\footcite{Inner_workings_of_the_German_Analyzer_in_Lucene_2016-05-08}
@@ -157,8 +157,8 @@ Dabei werden bereits grundlegende Verbesserungen vollzogen:\footcite{Inner_worki
 	"`einer"', "`eine"', "`eines"', "`einem"', "`einen"', "`der"', "`die"', "`das"', "`dass"', "`du"', "`oder"', "`mit"', usw.
 
 	\item \textbf{Stemming}\\
-	Beim \textit{Stemming} wird versucht das Wort auf den Wortstamm zu kürzen.
-	Dies erweitert die Suchmöglichkeiten indem Wortveränderungen auf Grund von \textit{Numerus} (Singular und Plural) und \textit{Kasus} (verschiedene Fälle) ignoriert werden.
+	Beim \textit{Stemming} wird versucht, das Wort auf den Wortstamm zu kürzen.
+	Dies erweitert die Suchmöglichkeiten, indem Wortveränderungen auf Grund von \textit{Numerus} (Singular und Plural) und \textit{Kasus} (verschiedene Fälle) ignoriert werden.
 
 	Beispiele für \textit{Stemming} sind:
 	Häuser $\rightarrow$ Haus, des Sohnes $\rightarrow$ Sohn, usw.
@@ -189,11 +189,11 @@ Die Optimierungen aus \secref{sec:documentOptimazing} wurden beide implementiert
 %\textit{Satztrennung}
 %\vspace{0.5em}\\
 \subsubsection{Satztrennung}
-Bei der Satztrennungs-Optimierung wurde die Dokumentaufteilung wie folgt verändert.
+Bei der Satztrennungs-Optimierung wurde die Dokumentaufteilung wie folgt verändert:
 Am Anfang war jeder Vers ein Dokument, was 31'103 \glspl{glos:documentLabel} ergab.
 Nach der Optimierung waren es noch 26'433 \glspl{glos:documentLabel}, was einer Reduktion von 4'670 \glspl{glos:documentLabel}n entspricht.
 
-Dabei wurden die Versen wie folgt zu neuen \glspl{glos:documentLabel}n zusammengefasst:
+Dabei wurden die Verse wie folgt zu neuen \glspl{glos:documentLabel}n zusammengefasst:
 \begin{table}[H]
 	\centering
 	\small\renewcommand{\arraystretch}{1.4}
@@ -224,7 +224,7 @@ Dabei wurden die Versen wie folgt zu neuen \glspl{glos:documentLabel}n zusammeng
 
 \newpage
 \subsubsection{Exkurs: der "`forceMerge"'}
-Der \gls{glos:indexLabel} der \glspl{glos:documentLabel} wird jeweils in verschiedene Segmente zusammengefasst, was verschiedenen \gls{glos:indexLabel}-Levels entspricht.
+Der \gls{glos:indexLabel} der \glspl{glos:documentLabel} wird jeweils in verschiedene Segmente zusammengefasst, was unterschiedlichen \gls{glos:indexLabel}-Levels entspricht.
 
 \begin{framed}
 	\textbf{Beispiel}: Namensverzeichnisses mit verschiedenen Segmenten
@@ -233,7 +233,7 @@ Der \gls{glos:indexLabel} der \glspl{glos:documentLabel} wird jeweils in verschi
 	
 	A -- C $\rightarrow$ A $\rightarrow$ Alexandra - Andrea
 	
-	Dabei entspricht jeder Teil einem Segment.
+	Dabei entspricht jeder Teil einem Segment und jede Hierarchie einem \gls{glos:indexLabel}-Level.
 \end{framed}
 
 Mit der Methode $forceMerge(n)$ kann der \gls{glos:indexLabel} zu $n$ Segmenten zusammengefügt werden, was sich positiv auf die Suchzeit auswirkt. Allerdings ist diese Operation sehr kostenaufwändig und wird für grosse, dynamische \glspl{glos:indexLabel} nicht empfohlen.
@@ -243,10 +243,10 @@ Anscheinend wurde die Handhabung von mehreren Segmenten in Lucene in ab Version 
 \begin{framed}
 	\textbf{Einblick in die Index-Generierung mit und ohne \textit{forceMerge}}
 	
-	Für den relativ kleinen \gls{glos:indexLabel} der Bibel, kann der \textit{forceMerge} problemlos durchgeführt werden.
-	Die \gls{glos:indexingLabel} ohne \textit{forceMerge} dauert auf dem Testsystem durchschnittlich 2.8 Sekunden. Mit dem \textit{forceMerge} dauert der Prozess 3.5 Sekunden ($+0.7$ Sekunden).
+	Für den relativ kleinen \gls{glos:indexLabel} der Bibel kann der \textit{forceMerge} problemlos durchgeführt werden.
+	Die \gls{glos:indexingLabel} ohne \textit{forceMerge} dauert auf dem Testsystem durchschnittlich 3.2 Sekunden. Mit dem \textit{forceMerge} dauert der Prozess 3.5 Sekunden ($+0.3$ Sekunden).
 	
-	Obwohl  der \gls{glos:indexLabel} immer noch sehr schnell zusammengestellt wird \ul{verlängert sich der Prozess mit \textit{forceMerge} um 25\%!}
+	Obwohl  der \gls{glos:indexLabel} immer noch sehr schnell zusammengestellt wird, \ul{verlängert sich der Prozess mit \textit{forceMerge} um 9\%!}
 	
 	Daraus wird schnell ersichtlich, dass die Operation nur mit Vorsicht auf grosse \glspl{glos:indexLabel} angewandt werden darf.
 \end{framed}
@@ -256,7 +256,7 @@ Anscheinend wurde die Handhabung von mehreren Segmenten in Lucene in ab Version 
 %\vspace{0.5em}\\
 \subsubsection{Kontextberücksichtigung}
 Die Kontextoptimierung wurde ebenfalls durchgeführt. Dies wirkt sich stark auf die \gls{glos:indexingLabel}s-Zeit aus.
-Folgende Tabelle zeigt die Dauer der Indexierung auf, abhängig ob der Kontext mit je drei benachbarten Versen \textit{indexiert \& gespeichert}, \textit{nur indexiert} oder \textit{gar nicht} in den Index aufgenommen worden ist.
+Folgende Tabelle zeigt die Dauer der Indexierung auf, abhängig, ob der Kontext mit je drei benachbarten Versen \textit{indexiert \& gespeichert}, \textit{nur indexiert} oder \textit{gar nicht} in den Index aufgenommen worden ist.
 Ausserdem ist der prozentuale Zeitanstieg für die \gls{glos:indexingLabel} mit \textit{forceMerge} je Indextyp angegeben.
 \begin{table}[H]
 	\centering
@@ -273,7 +273,7 @@ Ausserdem ist der prozentuale Zeitanstieg für die \gls{glos:indexingLabel} mit 
 		Messung 3 (s) & 5.3 & 6.3 & 4.9 & 6.4 & 3.1 & 3.6\\
 		Messung 4 (s) & 5.0 & 7.6 & 4.8 & 6.3 & 3.2 & 3.5\\ \hline \hline
 		\O \, (s) & \textbf{5.0} & \textbf{6.8} & \textbf{4.8} & \textbf{6.8} & \textbf{3.2} & \textbf{3.5}\\
-		Zeitanstieg (\%)& & \textbf{+35} &  & \textbf{+41} &  & \textbf{+11}\\ \hline
+		Zeitanstieg (\%)& & \textbf{+36} &  & \textbf{+42} &  & \textbf{+9}\\ \hline
 		Index Grösse (MB) & \multicolumn{2}{r||}{9.1} & \multicolumn{2}{r||}{7.4} & \multicolumn{2}{r||}{3.8}\\
 	\end{tabularx}
 \end{table}
@@ -281,9 +281,9 @@ Ausserdem ist der prozentuale Zeitanstieg für die \gls{glos:indexingLabel} mit 
 \vspace{0.5em}
 \textit{Auswertung der Kontextberücksichtigung}
 \vspace{0.5em}\\
-Die Kontextoptimierung funktioniert grundsätzlich wie geplant. Auf Grund der beschränkten Zeit des Projektes, kann der genaue Effekt dieser Optimierung nicht genauer bemessen werden.
+Die Kontextoptimierung funktioniert grundsätzlich wie geplant. Auf Grund der beschränkten Zeit des Projektes kann der genaue Effekt dieser Optimierung nicht genauer bemessen werden.
 
-Ein Nachteil der Kontextberücksichtigung ist, dass Verse die den Suchbegriff nur in den Nachbarsversen beinhalten trotzdem in der Resultat Liste erscheinen.
+Ein Nachteil der Kontextberücksichtigung ist, dass Verse, die den Suchbegriff nur in den Nachbarversen beinhalten trotzdem in der Resultat Liste erscheinen.
 Durch die niedrige Gewichtung (auch Boost genannt) von ungefähr 0.7, erscheinen diese Verse nach den Treffern, jedoch wird dadurch trotzdem die Precision, bei der die Anzahl Ergebnisse verwendet wird, negativ beeinflusst.
 
 Bei einer Suchmaschine mit Ranking, spielt dieses Total der Ergebnisse keine zentrale Rolle, weil der Nutzer oft nur einen kleinen Teil der Ergebnismenge anschaut.
@@ -293,14 +293,16 @@ Ganz nach dem Grundsatz: lieber ein Ergebnis mit tiefem Score, als kein Ergebnis
 
 
 \subsection{Indexierte Felder}
-Um Felder im \gls{glos:indexLabel} aufzunehmen, können je zwei Eigenschaften definiert werden: soll das Feld indexiert werden und soll das Feld vollständig persistiert werden.
+Für jedes Feld das in den \gls{glos:indexLabel} aufgenommen wird, können zwei Eigenschaften definiert werden: ob das Feld \textit{indexiert} werden soll und ob es \textit{persistiert} werden soll.
+Nach indexierte Werten kann gesucht werden. Persistierte Werte stehen für jeden Treffer vollständig zur Verfügung.
+%Um Felder im \gls{glos:indexLabel} aufzunehmen, können je zwei Eigenschaften definiert werden: soll das Feld indexiert werden und soll das Feld vollständig persistiert werden.
 
-Nach allen indexierten Felder kann anschliessend gesucht werden. Persistierte Felder können ausgelesen werden und so kontextspezifische Informationen wie Referenzen und Stellenangaben beinhalten.
+Nach allen indexierten Feldern kann anschliessend gesucht werden. Persistierte Felder können ausgelesen werden und so kontextspezifische Informationen wie Referenzen und Stellenangaben beinhalten.
 
 Im Index soll lediglich der Vers-Text (\textit{content}) indexiert werden.
 Dazu müssen folgende weitere Referenzinformationen mit abgelegt werden: \textit{id}, \textit{book}, \textit{chapter}, \textit{verse}.
 
-Zusätzlich für den Versuch der Kontext Optimierung (siehe \secref{sec:contextOptimaze}) sollen die Nachbarsverse ebenfalls indexiert werden. Sie werden ins Feld \textit{context} gespeichert und ebenfalls indexiert.
+Zusätzlich für den Versuch der Kontext Optimierung (siehe \secref{sec:contextOptimaze}) sollen die Nachbarverse ebenfalls indexiert werden. Sie werden ins Feld \textit{context} gespeichert und ebenfalls indexiert.
 
 
 \section{Suche}
@@ -313,14 +315,14 @@ Für den Suchbegriff müssen die gleichen Optimierungen wie für die \gls{glos:i
 Obwohl die Suchmaschine nur via \gls{cliLabel} bedient werden kann, sollen trotzdem grundlegende Features zur Verfügung gestellt werden:
 \begin{itemize}[noitemsep]
 	\item \textit{Paging}:
-	Die Suchresultate sollen gemäss dem \gls{glos:rankingLabel} aufgelistet werden. Es soll das Total der Ergebnissen angezeigt werden. Anschliessend sollen jeweils Seiten mit je 10 Ergebnissen folgen, durch die dann navigiert werden kann.
-	Die Navigation soll die Möglichkeit bieten zur nächsten Seite, zur vorgängigen Seite und zu einer bestimmten Seite zu wechseln.
+	Die Suchresultate werden gemäss dem \gls{glos:rankingLabel} aufgelistet. Es soll das Total der Ergebnisse angezeigt werden. Anschliessend folgen jeweils Seiten mit je 10 Ergebnissen, durch die navigiert werden kann.
+	Die Navigation bietet die Möglichkeit, zur nächsten, zur vorgängigen und zu einer bestimmten Seite zu wechseln.
 	
 	\item \textit{Highlighter}:
-	Um das Ergebnis angenehm auswerten zu können, sollen die Treffer farblich hervorgehoben werden, falls das Terminal dies unterstützt.
+	Um das Ergebnis angenehm auswerten zu können, werden die Treffer farblich hervorgehoben, falls dies vom Terminal unterstützt wird.
 
 	\item \textit{Suggest}:
-	Falls ähnlich geschriebene Begriffe im Index vorkommen, soll eine Funktion "`Did you mean:"' den ähnlichsten Begriffen anzeigen.
+	Falls ähnlich geschriebene Begriffe im Index vorkommen, soll eine Funktion "`Did you mean:"' den ähnlichsten Begriff anzeigen.
 	
 \end{itemize}
 
